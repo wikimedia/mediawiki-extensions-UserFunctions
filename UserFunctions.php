@@ -27,9 +27,9 @@ $wgExtensionCredits['parserhook'][] = array(
 	'path' => __FILE__,
 	'name' => 'UserFunctions',
 	'version' => '2.0',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:UserFunctions',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:UserFunctions',
 	'author' => array( 'Algorithm ', 'Toniher', 'Kghbln', 'al.' ),
-	'descriptionmsg' => 'ufunc-desc',
+	'descriptionmsg' => 'userfunctions-desc',
 );
 
 $wgAutoloadClasses['ExtUserFunctions'] = dirname(__FILE__).'/UserFunctions_body.php';

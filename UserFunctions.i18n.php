@@ -9,5 +9,6 @@
 $messages = array();
 
 $messages['en'] = array(
-	'ufunc-desc' => 'Enhance parser with user functions',
+	'userfunctions-desc' => 'Enhance parser with user functions',
 );
+
