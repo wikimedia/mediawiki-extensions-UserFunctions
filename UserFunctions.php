@@ -55,6 +55,10 @@ function wfSetupUserFunctions() {
 class UserFunctions_HookStub {
 	var $realObj;
 
+	/**
+	 * @param $parser Parser
+	 * @return bool
+	 */
 	function registerParser( &$parser ) {
 
 		if ( defined( get_class( $parser ) . '::SFH_OBJECT_ARGS' ) ) {
@@ -68,8 +72,8 @@ class UserFunctions_HookStub {
 			$parser->setFunctionHook( 'ifblocked', array( &$this, 'ifblocked' ) );
 			$parser->setFunctionHook( 'ifsysop', array( &$this, 'ifsysop' ) );
 			$parser->setFunctionHook( 'ifingroup', array( &$this, 'ifingroup' ) );
-		}	 
-	
+		}
+
 		$parser->setFunctionHook( 'realname', array( &$this, 'realname' ) );
 		$parser->setFunctionHook( 'username', array( &$this, 'username' ) );
 		$parser->setFunctionHook( 'useremail', array( &$this, 'useremail' ) );
@@ -79,7 +83,9 @@ class UserFunctions_HookStub {
 		return true;
 	}
 
-	/** Defer ParserClearState */
+	/**
+	 * Defer ParserClearState
+	 */
 	function clearState( &$parser ) {
 		if ( !is_null( $this->realObj ) ) {
 			$this->realObj->clearState( $parser );
@@ -87,7 +93,9 @@ class UserFunctions_HookStub {
 		return true;
 	}
 
-	/** Pass through function call */
+	/**
+	 * Pass through function call
+	 */
 	function __call( $name, $args ) {
 		if ( is_null( $this->realObj ) ) {
 			$this->realObj = new ExtUserFunctions;
