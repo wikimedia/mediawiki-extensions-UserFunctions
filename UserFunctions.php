@@ -61,18 +61,11 @@ class UserFunctions_HookStub {
 	 */
 	function registerParser( &$parser ) {
 
-		if ( defined( get_class( $parser ) . '::SFH_OBJECT_ARGS' ) ) {
-			// These functions accept DOM-style arguments
-			$parser->setFunctionHook( 'ifanon', array( &$this, 'ifanonObj' ), SFH_OBJECT_ARGS );
-			$parser->setFunctionHook( 'ifblocked', array( &$this, 'ifblockedObj' ), SFH_OBJECT_ARGS );
-			$parser->setFunctionHook( 'ifsysop', array( &$this, 'ifsysopObj' ), SFH_OBJECT_ARGS );
-			$parser->setFunctionHook( 'ifingroup', array( &$this, 'ifingroupObj' ), SFH_OBJECT_ARGS );
-		} else {
-			$parser->setFunctionHook( 'ifanon', array( &$this, 'ifanon' ) );
-			$parser->setFunctionHook( 'ifblocked', array( &$this, 'ifblocked' ) );
-			$parser->setFunctionHook( 'ifsysop', array( &$this, 'ifsysop' ) );
-			$parser->setFunctionHook( 'ifingroup', array( &$this, 'ifingroup' ) );
-		}
+		// These functions accept DOM-style arguments
+		$parser->setFunctionHook( 'ifanon', array( &$this, 'ifanonObj' ), SFH_OBJECT_ARGS );
+		$parser->setFunctionHook( 'ifblocked', array( &$this, 'ifblockedObj' ), SFH_OBJECT_ARGS );
+		$parser->setFunctionHook( 'ifsysop', array( &$this, 'ifsysopObj' ), SFH_OBJECT_ARGS );
+		$parser->setFunctionHook( 'ifingroup', array( &$this, 'ifingroupObj' ), SFH_OBJECT_ARGS );
 
 		$parser->setFunctionHook( 'realname', array( &$this, 'realname' ) );
 		$parser->setFunctionHook( 'username', array( &$this, 'username' ) );
