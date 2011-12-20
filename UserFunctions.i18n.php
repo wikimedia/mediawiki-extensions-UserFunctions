@@ -12,6 +12,13 @@ $messages['en'] = array(
 	'userfunctions-desc' => 'Enhance parser with user functions',
 );
 
+/** Catalan (Català)
+ * @author Toniher
+ */
+$messages['ca'] = array(
+	'userfunctions-desc' => "Millora l'analitzador amb funcions d'usuari",
+);
+
 /** German (Deutsch)
  * @author Kghbln
  */
@@ -38,6 +45,13 @@ $messages['gl'] = array(
  */
 $messages['hsb'] = array(
 	'userfunctions-desc' => 'Parser wo wužiwarske funkcije rozšěrić',
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'userfunctions-desc' => 'Проширување на можностите на парсерот со кориснички функции',
 );
 
 /** Dutch (Nederlands)
