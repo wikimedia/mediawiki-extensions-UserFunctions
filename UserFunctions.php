@@ -28,7 +28,7 @@ $wgExtensionCredits['parserhook'][] = array(
 	'name' => 'UserFunctions',
 	'version' => '2.0',
 	'url' => 'https://www.mediawiki.org/wiki/Extension:UserFunctions',
-	'author' => array( 'Algorithm ', 'Toniher', 'Kghbln', 'al.' ),
+	'author' => array( 'Algorithm ', 'Toniher', 'Kghbln', '...' ),
 	'descriptionmsg' => 'userfunctions-desc',
 );
 
