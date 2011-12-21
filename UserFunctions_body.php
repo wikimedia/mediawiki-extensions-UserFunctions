@@ -11,19 +11,13 @@ class ExtUserFunctions {
 		return true;
 	}
 
-	/**
-	 * @param $parser Parser
-	 * @param $then string
-	 * @param $else string
-	 * @return string
-	 */
-	function ifanon( &$parser, $then = '', $else = '' ) {
-		global $wgUser;
-		$parser->disableCache();
-		if($wgUser->isAnon()){
-			return $then;
-		}
-		return $else;
+        /**
+         * @param $parser Parser
+         * @return $obj User
+         */
+	private function getUserObj($parser) {
+		$obj = $parser->getOptions()->mUser;
+		return $obj;
 	}
 
 	/**
@@ -33,28 +27,12 @@ class ExtUserFunctions {
 	 * @return string
 	 */
 	function ifanonObj( &$parser, $frame, $args ) {
-		global $wgUser;
-		if($wgUser->isAnon()){
+		$myuser = $this->getUserObj($parser);
+		if($myuser->isAnon()){
 			return isset( $args[0] ) ? trim( $frame->expand( $args[0] ) ) : '';
 		} else {
 			return isset( $args[1] ) ? trim( $frame->expand( $args[1] ) ) : '';
 		}
-	}
-
-	/**
-	 * @param $parser Parser
-	 * @param $then string
-	 * @param $else string
-	 * @return string
-	 */
-	function ifblocked( &$parser, $then = '', $else = '' ) {
-		global $wgUser;
-		$parser->disableCache();
-
-		if($wgUser->isBlocked()) {
-			return $then;
-		}
-		return $else;
 	}
 
 	/**
@@ -64,27 +42,12 @@ class ExtUserFunctions {
 	 * @return string
 	 */
 	function ifblockedObj( &$parser, $frame, $args ) {
-		global $wgUser;
-		if($wgUser->isBlocked()){
+		$myuser = $this->getUserObj($parser);
+		if($myuser->isBlocked()){
 			return isset( $args[0] ) ? trim( $frame->expand( $args[0] ) ) : '';
 		} else {
 			return isset( $args[1] ) ? trim( $frame->expand( $args[1] ) ) : '';
 		}
-	}
-
-	/**
-	 * @param $parser Parser
-	 * @param $then string
-	 * @param $else string
-	 * @return string
-	 */
-	function ifsysop( &$parser, $then = '', $else = '' ) {
-		global $wgUser;
-		$parser->disableCache();
-		if($wgUser->isAllowed('protect')) {
-			return $then;
-		}
-		return $else;
 	}
 
 	/**
@@ -94,29 +57,12 @@ class ExtUserFunctions {
 	 * @return string
 	 */
 	function ifsysopObj( &$parser, $frame, $args ) {
-		global $wgUser;
-		if($wgUser->isAllowed('protect')){
+		$myuser = $this->getUserObj($parser);
+		if($myuser->isAllowed('protect')){
 			return isset( $args[0] ) ? trim( $frame->expand( $args[0] ) ) : '';
 		} else {
 			return isset( $args[1] ) ? trim( $frame->expand( $args[1] ) ) : '';
 		}
-	}
-
-	/**
-	 * @param $parser Parser
-	 * @param $grp string
-	 * @param $then string
-	 * @param $else string
-	 * @return string
-	 */
-	function ifingroup( &$parser, $grp = '', $then = '', $else = '' ) {
-		global $wgUser;
-		$parser->disableCache();
-
-		if($grp!=='' && in_array($grp,$wgUser->getEffectiveGroups())){
-			return $then;
-		}
-		return $else;
 	}
 
 	/**
@@ -126,10 +72,10 @@ class ExtUserFunctions {
 	 * @return string
 	 */
 	function ifingroupObj( &$parser, $frame, $args ) {
-		global $wgUser;
+		$myuser = $this->getUserObj($parser);
 		$grp = isset( $args[0] ) ? trim( $frame->expand( $args[0] ) ) : '';
 
-		if($grp!=='' && in_array($grp,$wgUser->getEffectiveGroups())){
+		if($grp!=='' && in_array($grp,$myuser->getEffectiveGroups())){
 			return isset( $args[1] ) ? trim( $frame->expand( $args[1] ) ) : '';
 		}
 		return isset( $args[2] ) ? trim( $frame->expand( $args[2] ) ) : '';
@@ -141,13 +87,13 @@ class ExtUserFunctions {
 	 * @return String
 	 */
 	function realname( &$parser, $alt = '' ) {
-		global $wgUser;
+		$myuser = $this->getUserObj($parser);
 		$parser->disableCache();
 
-		if($wgUser->isAnon() && $alt!=='') {
+		if($myuser->isAnon() && $alt!=='') {
 			return $alt;
 		}
-		return $wgUser->getRealName();
+		return $myuser->getRealName();
 	}
 
 	/**
@@ -156,13 +102,13 @@ class ExtUserFunctions {
 	 * @return String
 	 */
 	function username( &$parser, $alt = '' ) {
-		global $wgUser;
+		$myuser = $this->getUserObj($parser);
 		$parser->disableCache();
 
-		if($wgUser->isAnon() && $alt!=='') {
+		if($myuser->isAnon() && $alt!=='') {
 			return $alt;
 		}
-		return $wgUser->getName();
+		return $myuser->getName();
 	}
 
 	/**
@@ -171,13 +117,13 @@ class ExtUserFunctions {
 	 * @return String
 	 */
 	function useremail( &$parser, $alt = '' ) {
-		global $wgUser;
+		$myuser = $this->getUserObj($parser);
 		$parser->disableCache();
 
-		if($wgUser->isAnon() && $alt!=='') {
+		if($myuser->isAnon() && $alt!=='') {
 			return $alt;
 		}
-		return $wgUser->getEmail();
+		return $myuser->getEmail();
 	}
 
 	/**
@@ -186,17 +132,17 @@ class ExtUserFunctions {
 	 * @return String
 	 */
 	function nickname( &$parser, $alt = '' ) {
-		global $wgUser;
+		$myuser = $this->getUserObj($parser);
 		$parser->disableCache();
 
-		if($wgUser->isAnon()) {
+		if($myuser->isAnon()) {
 			if ( $alt!=='') {
 				return $alt;
 			}
-			return $wgUser->getName();
+			return $myuser->getName();
 		}
-		$nickname = $wgUser->getOption( 'nickname' );
-		$nickname = $nickname === '' ? $wgUser->getName() : $nickname;
+		$nickname = $myuser->getOption( 'nickname' );
+		$nickname = $nickname === '' ? $myuser->getName() : $nickname;
 		return $nickname;
 	}
 

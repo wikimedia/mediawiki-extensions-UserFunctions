@@ -22,6 +22,15 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	die( 'This file is a MediaWiki extension, it is not a valid entry point' );
 }
 
+/**
+ * Enable Personal Data Functions
+ * Set this to true if you want your users to be able to use the following functions:
+ * realname, username, useremail, nickname, ip
+ * WARNING: These functions can be used to leak your user's email addresses and real names.
+ * If unsure, don't activate these features.
+**/
+$wgUFEnablePersonalDataFunctions = false;
+
 $wgExtensionFunctions[] = 'wfSetupUserFunctions';
 $wgExtensionCredits['parserhook'][] = array(
 	'path' => __FILE__,
@@ -58,6 +67,7 @@ class UserFunctions_HookStub {
 	 * @return bool
 	 */
 	function registerParser( &$parser ) {
+		global $wgUFEnablePersonalDataFunctions;		
 
 		// These functions accept DOM-style arguments
 		$parser->setFunctionHook( 'ifanon', array( &$this, 'ifanonObj' ), SFH_OBJECT_ARGS );
@@ -65,12 +75,14 @@ class UserFunctions_HookStub {
 		$parser->setFunctionHook( 'ifsysop', array( &$this, 'ifsysopObj' ), SFH_OBJECT_ARGS );
 		$parser->setFunctionHook( 'ifingroup', array( &$this, 'ifingroupObj' ), SFH_OBJECT_ARGS );
 
-		$parser->setFunctionHook( 'realname', array( &$this, 'realname' ) );
-		$parser->setFunctionHook( 'username', array( &$this, 'username' ) );
-		$parser->setFunctionHook( 'useremail', array( &$this, 'useremail' ) );
-		$parser->setFunctionHook( 'nickname', array( &$this, 'nickname' ) );
-		$parser->setFunctionHook( 'ip', array( &$this, 'ip' ) );
-		
+		if ($wgUFEnablePersonalDataFunctions) {
+			$parser->setFunctionHook( 'realname', array( &$this, 'realname' ) );
+			$parser->setFunctionHook( 'username', array( &$this, 'username' ) );
+			$parser->setFunctionHook( 'useremail', array( &$this, 'useremail' ) );
+			$parser->setFunctionHook( 'nickname', array( &$this, 'nickname' ) );
+			$parser->setFunctionHook( 'ip', array( &$this, 'ip' ) );
+		}
+
 		return true;
 	}
 
