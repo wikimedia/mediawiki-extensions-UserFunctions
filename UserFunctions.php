@@ -1,7 +1,7 @@
 <?php
 /**
  * UserFunctions extension - Provides a set of dynamic parser functions that trigger on the current user.
- * @version 2.0 - 2011/12/13 (Based on ParserFunctions)
+ * @version 2.1.1 - 2011/12/23 (Based on ParserFunctions)
  *
  * @link http://www.mediawiki.org/wiki/Extension:UserFunctions Documentation
  *
@@ -35,7 +35,7 @@ $wgExtensionFunctions[] = 'wfSetupUserFunctions';
 $wgExtensionCredits['parserhook'][] = array(
 	'path' => __FILE__,
 	'name' => 'UserFunctions',
-	'version' => '2.1',
+	'version' => '2.1.1',
 	'url' => 'https://www.mediawiki.org/wiki/Extension:UserFunctions',
 	'author' => array( 'Algorithm ', 'Toniher', 'Kghbln', 'Wikinaut', '...' ),
 	'descriptionmsg' => 'userfunctions-desc',

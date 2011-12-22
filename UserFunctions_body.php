@@ -28,6 +28,8 @@ class ExtUserFunctions {
 	 */
 	function ifanonObj( &$parser, $frame, $args ) {
 		$myuser = $this->getUserObj($parser);
+		$parser->disableCache();
+
 		if($myuser->isAnon()){
 			return isset( $args[0] ) ? trim( $frame->expand( $args[0] ) ) : '';
 		} else {
@@ -43,6 +45,8 @@ class ExtUserFunctions {
 	 */
 	function ifblockedObj( &$parser, $frame, $args ) {
 		$myuser = $this->getUserObj($parser);
+		$parser->disableCache();
+
 		if($myuser->isBlocked()){
 			return isset( $args[0] ) ? trim( $frame->expand( $args[0] ) ) : '';
 		} else {
@@ -58,6 +62,8 @@ class ExtUserFunctions {
 	 */
 	function ifsysopObj( &$parser, $frame, $args ) {
 		$myuser = $this->getUserObj($parser);
+		$parser->disableCache();
+
 		if($myuser->isAllowed('protect')){
 			return isset( $args[0] ) ? trim( $frame->expand( $args[0] ) ) : '';
 		} else {
@@ -73,6 +79,8 @@ class ExtUserFunctions {
 	 */
 	function ifingroupObj( &$parser, $frame, $args ) {
 		$myuser = $this->getUserObj($parser);
+		$parser->disableCache();
+
 		$grp = isset( $args[0] ) ? trim( $frame->expand( $args[0] ) ) : '';
 
 		if($grp!=='' && in_array($grp,$myuser->getEffectiveGroups())){
