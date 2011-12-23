@@ -54,6 +54,13 @@ $messages['hsb'] = array(
 	'userfunctions-desc' => 'Parser wo wužiwarske funkcije rozšěrić',
 );
 
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'userfunctions-desc' => 'Verbessert de Parser mat Benotzer-Fonctiounen',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
