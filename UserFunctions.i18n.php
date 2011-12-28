@@ -12,6 +12,13 @@ $messages['en'] = array(
 	'userfunctions-desc' => 'Enhance parser with user functions',
 );
 
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'userfunctions-desc' => "Ameyora l'análisis sintáuticu con funciones del usuariu",
+);
+
 /** Catalan (Català)
  * @author Toniher
  */
