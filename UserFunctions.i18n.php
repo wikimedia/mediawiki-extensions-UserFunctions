@@ -61,6 +61,13 @@ $messages['hsb'] = array(
 	'userfunctions-desc' => 'Parser wo wužiwarske funkcije rozšěrić',
 );
 
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'userfunctions-desc' => 'Meliorar le analysator syntactic con functiones definite per usatores',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
