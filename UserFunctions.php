@@ -31,11 +31,17 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 **/
 $wgUFEnablePersonalDataFunctions = false;
 
+/** Restrict to certain namespaces **/
+$wgUFAllowedNamespaces = array(
+        NS_MEDIAWIKI => true
+);
+
+
 $wgExtensionFunctions[] = 'wfSetupUserFunctions';
 $wgExtensionCredits['parserhook'][] = array(
 	'path' => __FILE__,
 	'name' => 'UserFunctions',
-	'version' => '2.1.1',
+	'version' => '2.2',
 	'url' => 'https://www.mediawiki.org/wiki/Extension:UserFunctions',
 	'author' => array( 'Algorithm ', 'Toniher', 'Kghbln', 'Wikinaut', '...' ),
 	'descriptionmsg' => 'userfunctions-desc',
@@ -61,26 +67,47 @@ function wfSetupUserFunctions() {
  */
 class UserFunctions_HookStub {
 	var $realObj;
+	var $cur_ns;
 
 	/**
 	 * @param $parser Parser
 	 * @return bool
 	 */
 	function registerParser( &$parser ) {
-		global $wgUFEnablePersonalDataFunctions;		
+		global $wgUFEnablePersonalDataFunctions, $wgUFAllowedNamespaces;
 
-		// These functions accept DOM-style arguments
-		$parser->setFunctionHook( 'ifanon', array( &$this, 'ifanonObj' ), SFH_OBJECT_ARGS );
-		$parser->setFunctionHook( 'ifblocked', array( &$this, 'ifblockedObj' ), SFH_OBJECT_ARGS );
-		$parser->setFunctionHook( 'ifsysop', array( &$this, 'ifsysopObj' ), SFH_OBJECT_ARGS );
-		$parser->setFunctionHook( 'ifingroup', array( &$this, 'ifingroupObj' ), SFH_OBJECT_ARGS );
+		// Depending on MW version
+		if (class_exists("RequestContext")) {		
+			$cur_ns = RequestContext::getMain()->getTitle()->getNamespace();
+		} else {
+			global $wgTitle;
+			$cur_ns = $wgTitle->getNamespace();
+		}
 
-		if ($wgUFEnablePersonalDataFunctions) {
-			$parser->setFunctionHook( 'realname', array( &$this, 'realname' ) );
-			$parser->setFunctionHook( 'username', array( &$this, 'username' ) );
-			$parser->setFunctionHook( 'useremail', array( &$this, 'useremail' ) );
-			$parser->setFunctionHook( 'nickname', array( &$this, 'nickname' ) );
-			$parser->setFunctionHook( 'ip', array( &$this, 'ip' ) );
+		$process = false;
+
+		// Check if current page NS is in the allowed list 
+		if (isset($wgUFAllowedNamespaces[$cur_ns])) {
+			if ($wgUFAllowedNamespaces[$cur_ns]) {
+				$process = true;
+			} 
+		}
+
+		if ($process) {
+			// These functions accept DOM-style arguments
+			$parser->setFunctionHook( 'ifanon', array( &$this, 'ifanonObj' ), SFH_OBJECT_ARGS );
+			$parser->setFunctionHook( 'ifblocked', array( &$this, 'ifblockedObj' ), SFH_OBJECT_ARGS );
+			$parser->setFunctionHook( 'ifsysop', array( &$this, 'ifsysopObj' ), SFH_OBJECT_ARGS );
+			$parser->setFunctionHook( 'ifingroup', array( &$this, 'ifingroupObj' ), SFH_OBJECT_ARGS );
+
+			if ($wgUFEnablePersonalDataFunctions) {
+				$parser->setFunctionHook( 'realname', array( &$this, 'realname' ) );
+				$parser->setFunctionHook( 'username', array( &$this, 'username' ) );
+				$parser->setFunctionHook( 'useremail', array( &$this, 'useremail' ) );
+				$parser->setFunctionHook( 'nickname', array( &$this, 'nickname' ) );
+				$parser->setFunctionHook( 'ip', array( &$this, 'ip' ) );
+			}
+
 		}
 
 		return true;
