@@ -54,6 +54,13 @@ $messages['gl'] = array(
 	'userfunctions-desc' => 'Mellora o analizador con funcións de usuario',
 );
 
+/** Hebrew (עברית)
+ * @author Amire80
+ */
+$messages['he'] = array(
+	'userfunctions-desc' => 'הרחבת המפענח עם פונקציות משתמש',
+);
+
 /** Upper Sorbian (Hornjoserbsce)
  * @author Michawiki
  */
