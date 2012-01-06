@@ -96,3 +96,10 @@ $messages['nl'] = array(
 	'userfunctions-desc' => 'Breidt de parser uit met gebruikersfuncties',
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'userfunctions-desc' => 'Mijora ël parse con funsion utent',
+);
+
