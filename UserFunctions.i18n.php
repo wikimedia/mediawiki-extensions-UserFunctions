@@ -97,9 +97,10 @@ $messages['nl'] = array(
 );
 
 /** Piedmontese (Piemontèis)
+ * @author Borichèt
  * @author Dragonòt
  */
 $messages['pms'] = array(
-	'userfunctions-desc' => 'Mijora ël parse con funsion utent',
+	'userfunctions-desc' => "Amelioré l'analisator con dle funsion utent",
 );
 
