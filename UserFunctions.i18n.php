@@ -19,6 +19,13 @@ $messages['ast'] = array(
 	'userfunctions-desc' => "Ameyora l'análisis sintáuticu con funciones del usuariu",
 );
 
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+ * @author Wizardist
+ */
+$messages['be-tarask'] = array(
+	'userfunctions-desc' => 'Узбагачае парсэр карыстальніцкімі функцыямі',
+);
+
 /** Catalan (Català)
  * @author Toniher
  */
