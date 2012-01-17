@@ -20,10 +20,11 @@ $messages['ast'] = array(
 );
 
 /** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+ * @author EugeneZelenko
  * @author Wizardist
  */
 $messages['be-tarask'] = array(
-	'userfunctions-desc' => 'Узбагачае парсэр карыстальніцкімі функцыямі',
+	'userfunctions-desc' => 'Пашырае магчымасьці парсэра функцыямі карыстальніка',
 );
 
 /** Catalan (Català)
