@@ -97,6 +97,13 @@ $messages['mk'] = array(
 	'userfunctions-desc' => 'Проширување на можностите на парсерот со кориснички функции',
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'userfunctions-desc' => 'Meningkatkan penghurai dengan fungsi-fungsi pengguna',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
