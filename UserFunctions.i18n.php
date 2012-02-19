@@ -111,6 +111,13 @@ $messages['nl'] = array(
 	'userfunctions-desc' => 'Breidt de parser uit met gebruikersfuncties',
 );
 
+/** Polish (Polski)
+ * @author BeginaFelicysym
+ */
+$messages['pl'] = array(
+	'userfunctions-desc' => 'Rozbudowa parsera o funkcje użytkownika',
+);
+
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  * @author Dragonòt
