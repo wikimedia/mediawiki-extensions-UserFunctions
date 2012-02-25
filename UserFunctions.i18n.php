@@ -126,3 +126,10 @@ $messages['pms'] = array(
 	'userfunctions-desc' => "Amelioré l'analisator con dle funsion utent",
 );
 
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Hzy980512
+ */
+$messages['zh-hans'] = array(
+	'userfunctions-desc' => '增强用户函数的解析器',
+);
+
