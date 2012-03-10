@@ -48,6 +48,13 @@ $messages['dsb'] = array(
 	'userfunctions-desc' => 'Parser wó wužywarske funkcije rozšyriś',
 );
 
+/** Spanish (Español)
+ * @author Armando-Martin
+ */
+$messages['es'] = array(
+	'userfunctions-desc' => 'Mejorar el analizador (parser) con funciones de usuario',
+);
+
 /** French (Français)
  * @author Gomoko
  */
