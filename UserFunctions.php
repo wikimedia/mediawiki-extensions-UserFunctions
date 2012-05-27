@@ -1,7 +1,7 @@
 <?php
 /**
  * UserFunctions extension - Provides a set of dynamic parser functions that trigger on the current user.
- * @version 2.1.1 - 2011/12/23 (Based on ParserFunctions)
+ * @version 2.3 - 2012/05/27 (Based on ParserFunctions)
  *
  * @link http://www.mediawiki.org/wiki/Extension:UserFunctions Documentation
  *
@@ -41,7 +41,7 @@ $wgExtensionFunctions[] = 'wfSetupUserFunctions';
 $wgExtensionCredits['parserhook'][] = array(
 	'path' => __FILE__,
 	'name' => 'UserFunctions',
-	'version' => '2.2',
+	'version' => '2.3',
 	'url' => 'https://www.mediawiki.org/wiki/Extension:UserFunctions',
 	'author' => array( 'Algorithm ', 'Toniher', 'Kghbln', 'Wikinaut', '...' ),
 	'descriptionmsg' => 'userfunctions-desc',
@@ -76,21 +76,43 @@ class UserFunctions_HookStub {
 	function registerParser( &$parser ) {
 		global $wgUFEnablePersonalDataFunctions, $wgUFAllowedNamespaces;
 
+		// Whether it's a Special Page or a Maintenance Script
+		$special = false;
+
 		// Depending on MW version
 		if (class_exists("RequestContext")) {		
-			$cur_ns = RequestContext::getMain()->getTitle()->getNamespace();
+			$pagetitle = RequestContext::getMain()->getTitle();
+			if (method_exists($pagetitle, 'getNamespace' )) {
+				$cur_ns = $pagetitle->getNamespace();
+				if ($cur_ns == -1) {
+					$special = true;		
+				}
+			}
+			else {
+				$special = true;
+			}
 		} else {
 			global $wgTitle;
-			$cur_ns = $wgTitle->getNamespace();
+			if (method_exists($wgTitle, 'getNamespace' )) {
+				$cur_ns = $wgTitle->getNamespace();
+				if ($cur_ns == -1) {
+                                	$special = true;
+				}
+			}
+			else {
+				$special = true;
+			}
 		}
 
 		$process = false;
 
-		// Check if current page NS is in the allowed list 
-		if (isset($wgUFAllowedNamespaces[$cur_ns])) {
-			if ($wgUFAllowedNamespaces[$cur_ns]) {
-				$process = true;
-			} 
+		// As far it's not special case, check if current page NS is in the allowed list 
+		if (!$special) {
+			if (isset($wgUFAllowedNamespaces[$cur_ns])) {
+				if ($wgUFAllowedNamespaces[$cur_ns]) {
+					$process = true;
+				} 
+			}
 		}
 
 		if ($process) {

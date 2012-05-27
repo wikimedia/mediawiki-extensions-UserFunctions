@@ -83,8 +83,15 @@ class ExtUserFunctions {
 
 		$grp = isset( $args[0] ) ? trim( $frame->expand( $args[0] ) ) : '';
 
-		if($grp!=='' && in_array($grp,$myuser->getEffectiveGroups())){
-			return isset( $args[1] ) ? trim( $frame->expand( $args[1] ) ) : '';
+		if($grp!=='') {
+			# Considering multiple groups
+			$allgrp = explode(",", $grp);
+
+			foreach ($allgrp as $elgrp) {
+				if (in_array($elgrp,$myuser->getEffectiveGroups())){
+        	                        return isset( $args[1] ) ? trim( $frame->expand( $args[1] ) ) : '';
+                        	}
+			}
 		}
 		return isset( $args[2] ) ? trim( $frame->expand( $args[2] ) ) : '';
 	}
