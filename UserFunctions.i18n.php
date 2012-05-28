@@ -97,6 +97,13 @@ $messages['ja'] = array(
 	'userfunctions-desc' => '利用者関数で構文解析を拡張する',
 );
 
+/** Colognian (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'userfunctions-desc' => 'Deiht dä Paaser met Metmaacher-Funxjuhne opmoze.',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
