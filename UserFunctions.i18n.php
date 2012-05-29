@@ -97,6 +97,13 @@ $messages['ja'] = array(
 	'userfunctions-desc' => '利用者関数で構文解析を拡張する',
 );
 
+/** Korean (한국어)
+ * @author 아라
+ */
+$messages['ko'] = array(
+	'userfunctions-desc' => '사용자 기능 파서를 향상',
+);
+
 /** Colognian (Ripoarisch)
  * @author Purodha
  */
