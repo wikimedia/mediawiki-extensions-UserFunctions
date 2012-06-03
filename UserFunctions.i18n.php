@@ -92,9 +92,10 @@ $messages['ia'] = array(
 
 /** Italian (Italiano)
  * @author Beta16
+ * @author Ximo17
  */
 $messages['it'] = array(
-	'userfunctions-desc' => "Migliora le funzioni parser per l'utente",
+	'userfunctions-desc' => 'Migliora il parser con le funzioni utente',
 );
 
 /** Japanese (日本語)
