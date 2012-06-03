@@ -90,12 +90,12 @@ $messages['ia'] = array(
 	'userfunctions-desc' => 'Meliorar le analysator syntactic con functiones definite per usatores',
 );
 
-/** Italian (Italiano)
+/** Italian (italiano)
  * @author Beta16
  * @author Ximo17
  */
 $messages['it'] = array(
-	'userfunctions-desc' => 'Migliora il parser con le funzioni utente',
+	'userfunctions-desc' => 'Migliora il parser con le funzioni per utente',
 );
 
 /** Japanese (日本語)
