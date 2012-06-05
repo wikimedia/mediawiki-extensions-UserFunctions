@@ -1,7 +1,7 @@
 <?php
 /**
  * UserFunctions extension - Provides a set of dynamic parser functions that trigger on the current user.
- * @version 2.3 - 2012/05/27 (Based on ParserFunctions)
+ * @version 2.4 - 2012/06/02 (Based on ParserFunctions)
  *
  * @link http://www.mediawiki.org/wiki/Extension:UserFunctions Documentation
  *
@@ -31,17 +31,18 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 **/
 $wgUFEnablePersonalDataFunctions = false;
 
+/** Allow to be used in places such as SF form **/
+$wgUFEnableSpecialContexts = true;
+
 /** Restrict to certain namespaces **/
 $wgUFAllowedNamespaces = array(
         NS_MEDIAWIKI => true
 );
 
-
-$wgExtensionFunctions[] = 'wfSetupUserFunctions';
 $wgExtensionCredits['parserhook'][] = array(
 	'path' => __FILE__,
 	'name' => 'UserFunctions',
-	'version' => '2.3',
+	'version' => '2.4',
 	'url' => 'https://www.mediawiki.org/wiki/Extension:UserFunctions',
 	'author' => array( 'Algorithm ', 'Toniher', 'Kghbln', 'Wikinaut', '...' ),
 	'descriptionmsg' => 'userfunctions-desc',
@@ -51,108 +52,98 @@ $wgAutoloadClasses['ExtUserFunctions'] = dirname(__FILE__).'/UserFunctions_body.
 $wgExtensionMessagesFiles['UserFunctions'] = dirname( __FILE__ ) . '/UserFunctions.i18n.php';
 $wgExtensionMessagesFiles['UserFunctionsMagic'] = dirname( __FILE__ ) . '/UserFunctions.i18n.magic.php';
 
-
-function wfSetupUserFunctions() {
-	global $wgUFHookStub, $wgHooks;
-
-	$wgUFHookStub = new UserFunctions_HookStub;
-
-	$wgHooks['ParserFirstCallInit'][] = array( &$wgUFHookStub, 'registerParser' );
-	$wgHooks['ParserClearState'][] = array( &$wgUFHookStub, 'clearState' );
-}
+$wgHooks['ParserFirstCallInit'][] = 'wfRegisterUserFunctions';
 
 /**
- * Stub class to defer loading of the bulk of the code until a User function is
- * actually used.
+ * @param $parser Parser
+ * @return bool
  */
-class UserFunctions_HookStub {
-	var $realObj;
-	var $cur_ns;
 
-	/**
-	 * @param $parser Parser
-	 * @return bool
-	 */
-	function registerParser( &$parser ) {
-		global $wgUFEnablePersonalDataFunctions, $wgUFAllowedNamespaces;
+function wfRegisterUserFunctions( $parser ) {
+	global $wgUFEnablePersonalDataFunctions, $wgUFAllowedNamespaces, $wgUFEnableSpecialContexts;
+	
+	// Initialize NS
+	$cur_ns = -1;
+		
+	// Whether it's a Special Page or a Maintenance Script
+	$special = false;
 
-		// Whether it's a Special Page or a Maintenance Script
-		$special = false;
-
-		// Depending on MW version
-		if (class_exists("RequestContext")) {		
-			$pagetitle = RequestContext::getMain()->getTitle();
-			if (method_exists($pagetitle, 'getNamespace' )) {
-				$cur_ns = $pagetitle->getNamespace();
-				if ($cur_ns == -1) {
-					$special = true;		
-				}
-			}
-			else {
-				$special = true;
-			}
-		} else {
-			global $wgTitle;
-			if (method_exists($wgTitle, 'getNamespace' )) {
-				$cur_ns = $wgTitle->getNamespace();
-				if ($cur_ns == -1) {
-                                	$special = true;
-				}
-			}
-			else {
+	// Depending on MW version
+	if (class_exists("RequestContext")) {		
+		$pagetitle = RequestContext::getMain()->getTitle();
+		if (method_exists($pagetitle, 'getNamespace' )) {
+			$cur_ns = $pagetitle->getNamespace();
+			if ($cur_ns == -1) {
 				$special = true;
 			}
 		}
+		else {
+			$special = true;
+		}
+	} else {
+		global $wgTitle;
+		if (method_exists($wgTitle, 'getNamespace' )) {
+			$cur_ns = $wgTitle->getNamespace();
+			if ($cur_ns == -1) {
+				$special = true;
+			}
+		}
+		else {
+			$special = true;
+		}
+	}
 
-		$process = false;
+	$process = false;
 
-		// As far it's not special case, check if current page NS is in the allowed list 
-		if (!$special) {
-			if (isset($wgUFAllowedNamespaces[$cur_ns])) {
-				if ($wgUFAllowedNamespaces[$cur_ns]) {
+	// As far it's not special case, check if current page NS is in the allowed list 
+	if (!$special) {
+		if (isset($wgUFAllowedNamespaces[$cur_ns])) {
+			if ($wgUFAllowedNamespaces[$cur_ns]) {
+				$process = true;
+			} 
+		}
+	}
+	else {
+		if ($wgUFEnableSpecialContexts) {
+			
+			$pagetitle = "";
+
+			if (class_exists("RequestContext")) {
+				$pagetitle = RequestContext::getMain()->getTitle();
+			}
+			else {
+				global $wgTitle;
+				$pagetitle = $wgTitle;				 
+			}
+
+			// Case when creating forms. Others?
+			if ($pagetitle->mTextform) {
+				if (preg_match("/^FormEdit/", $pagetitle->mTextform)) {
 					$process = true;
-				} 
+				}
 			}
 		}
+	}
+	
+	if ($process) {
+		// These functions accept DOM-style arguments
+		
+		$parser->setFunctionHook( 'ifanon', 'ExtUserFunctions::ifanonObj', SFH_OBJECT_ARGS );
+		$parser->setFunctionHook( 'ifblocked', 'ExtUserFunctions::ifblockedObj', SFH_OBJECT_ARGS );
+		$parser->setFunctionHook( 'ifsysop', 'ExtUserFunctions::ifsysopObj', SFH_OBJECT_ARGS );
+		$parser->setFunctionHook( 'ifingroup', 'ExtUserFunctions::ifingroupObj', SFH_OBJECT_ARGS );
 
-		if ($process) {
-			// These functions accept DOM-style arguments
-			$parser->setFunctionHook( 'ifanon', array( &$this, 'ifanonObj' ), SFH_OBJECT_ARGS );
-			$parser->setFunctionHook( 'ifblocked', array( &$this, 'ifblockedObj' ), SFH_OBJECT_ARGS );
-			$parser->setFunctionHook( 'ifsysop', array( &$this, 'ifsysopObj' ), SFH_OBJECT_ARGS );
-			$parser->setFunctionHook( 'ifingroup', array( &$this, 'ifingroupObj' ), SFH_OBJECT_ARGS );
-
-			if ($wgUFEnablePersonalDataFunctions) {
-				$parser->setFunctionHook( 'realname', array( &$this, 'realname' ) );
-				$parser->setFunctionHook( 'username', array( &$this, 'username' ) );
-				$parser->setFunctionHook( 'useremail', array( &$this, 'useremail' ) );
-				$parser->setFunctionHook( 'nickname', array( &$this, 'nickname' ) );
-				$parser->setFunctionHook( 'ip', array( &$this, 'ip' ) );
-			}
-
+		if ($wgUFEnablePersonalDataFunctions) {
+			$parser->setFunctionHook( 'realname', 'ExtUserFunctions::realname' );
+			$parser->setFunctionHook( 'username', 'ExtUserFunctions::username' );
+			$parser->setFunctionHook( 'useremail', 'ExtUserFunctions::useremail' );
+			$parser->setFunctionHook( 'nickname', 'ExtUserFunctions::nickname' );
+			$parser->setFunctionHook( 'ip', 'ExtUserFunctions::ip' );
 		}
 
-		return true;
 	}
 
-	/**
-	 * Defer ParserClearState
-	 */
-	function clearState( &$parser ) {
-		if ( !is_null( $this->realObj ) ) {
-			$this->realObj->clearState( $parser );
-		}
-		return true;
-	}
-
-	/**
-	 * Pass through function call
-	 */
-	function __call( $name, $args ) {
-		if ( is_null( $this->realObj ) ) {
-			$this->realObj = new ExtUserFunctions;
-			$this->realObj->clearState( $args[0] );
-		}
-		return call_user_func_array( array( $this->realObj, $name ), $args );
-	}
+	return true;
 }
+
+
