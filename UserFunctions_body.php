@@ -108,7 +108,7 @@ class ExtUserFunctions {
 			$allgrp = explode(",", $grp);
 
 			foreach ($allgrp as $elgrp) {
-				if (in_array($elgrp,$pUser->getEffectiveGroups())){
+				if (in_array(trim($elgrp),$pUser->getEffectiveGroups())){
         	                        return isset( $args[1] ) ? trim( $frame->expand( $args[1] ) ) : '';
                         	}
 			}
