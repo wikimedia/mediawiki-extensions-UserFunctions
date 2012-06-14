@@ -12,7 +12,7 @@ $messages['en'] = array(
 	'userfunctions-desc' => 'Enhance parser with user functions',
 );
 
-/** Asturian (Asturianu)
+/** Asturian (asturianu)
  * @author Xuacu
  */
 $messages['ast'] = array(
@@ -27,7 +27,7 @@ $messages['be-tarask'] = array(
 	'userfunctions-desc' => 'Пашырае магчымасьці парсэра функцыямі карыстальніка',
 );
 
-/** Catalan (Català)
+/** Catalan (català)
  * @author Toniher
  */
 $messages['ca'] = array(
@@ -48,14 +48,14 @@ $messages['dsb'] = array(
 	'userfunctions-desc' => 'Parser wó wužywarske funkcije rozšyriś',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Armando-Martin
  */
 $messages['es'] = array(
 	'userfunctions-desc' => 'Mejorar el analizador (parser) con funciones de usuario',
 );
 
-/** French (Français)
+/** French (français)
  * @author Gomoko
  */
 $messages['fr'] = array(
@@ -83,7 +83,7 @@ $messages['hsb'] = array(
 	'userfunctions-desc' => 'Parser wo wužiwarske funkcije rozšěrić',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -126,7 +126,7 @@ $messages['lb'] = array(
 	'userfunctions-desc' => 'Verbessert de Parser mat Benotzer-Fonctiounen',
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -147,7 +147,7 @@ $messages['nl'] = array(
 	'userfunctions-desc' => 'Breidt de parser uit met gebruikersfuncties',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author BeginaFelicysym
  */
 $messages['pl'] = array(
@@ -162,7 +162,7 @@ $messages['pms'] = array(
 	'userfunctions-desc' => "Amelioré l'analisator con dle funsion utent",
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
+/** Simplified Chinese (‪中文（简体）‬)
  * @author Hzy980512
  */
 $messages['zh-hans'] = array(
