@@ -19,7 +19,7 @@ $messages['ast'] = array(
 	'userfunctions-desc' => "Ameyora l'análisis sintáuticu con funciones del usuariu",
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Wizardist
  */
@@ -41,7 +41,7 @@ $messages['de'] = array(
 	'userfunctions-desc' => 'Ergänzt Parserfunktionen, die benutzerbezogene Funktionen auf Wikiseiten ermöglichen',
 );
 
-/** Lower Sorbian (Dolnoserbski)
+/** Lower Sorbian (dolnoserbski)
  * @author Michawiki
  */
 $messages['dsb'] = array(
@@ -62,7 +62,7 @@ $messages['fr'] = array(
 	'userfunctions-desc' => "Améliore l'analyseur avec des fonctions utilisateur",
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -76,7 +76,7 @@ $messages['he'] = array(
 	'userfunctions-desc' => 'הרחבת המפענח עם פונקציות משתמש',
 );
 
-/** Upper Sorbian (Hornjoserbsce)
+/** Upper Sorbian (hornjoserbsce)
  * @author Michawiki
  */
 $messages['hsb'] = array(
