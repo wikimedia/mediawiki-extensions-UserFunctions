@@ -162,6 +162,13 @@ $messages['pms'] = array(
 	'userfunctions-desc' => "Amelioré l'analisator con dle funsion utent",
 );
 
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'userfunctions-desc' => 'Painamin ang pambanghay sa pamamagitan ng mga tungkulin ng tagagamit',
+);
+
 /** Simplified Chinese (‪中文（简体）‬)
  * @author Hzy980512
  */
