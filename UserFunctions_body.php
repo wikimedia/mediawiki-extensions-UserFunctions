@@ -31,7 +31,7 @@ class ExtUserFunctions {
 	 * Using $wgUser Incompatibility with SMW using via $parser
 	**/
 	
-	private function getUserObj() {
+	private static function getUserObj() {
 		global $wgUser;
 		return $wgUser;
 	}
@@ -121,7 +121,7 @@ class ExtUserFunctions {
 	 * @param $alt string
 	 * @return String
 	 */
-	function realname( $parser, $alt = '' ) {
+	public static function realname( $parser, $alt = '' ) {
 		
 		$parser->disableCache();
 		$pUser = self::getUserObj();
@@ -137,7 +137,7 @@ class ExtUserFunctions {
 	 * @param $alt string
 	 * @return String
 	 */
-	function username( $parser, $alt = '' ) {
+	public static function username( $parser, $alt = '' ) {
 		
 		$parser->disableCache();
 		$pUser = self::getUserObj();
@@ -153,7 +153,7 @@ class ExtUserFunctions {
 	 * @param $alt string
 	 * @return String
 	 */
-	function useremail( $parser, $alt = '' ) {
+	public static function useremail( $parser, $alt = '' ) {
 		
 		$parser->disableCache();
 		$pUser = self::getUserObj();
@@ -169,7 +169,7 @@ class ExtUserFunctions {
 	 * @param $alt string
 	 * @return String
 	 */
-	function nickname( $parser, $alt = '' ) {
+	public static function nickname( $parser, $alt = '' ) {
 		
 		$parser->disableCache();
 		$pUser = self::getUserObj();
@@ -189,7 +189,7 @@ class ExtUserFunctions {
 	 * @param $parser Parser
 	 * @return string
 	 */
-	function ip( $parser ) {
+	public static function ip( $parser ) {
 		
 		$parser->disableCache();
 		return wfGetIP();

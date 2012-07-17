@@ -1,7 +1,7 @@
 <?php
 /**
  * UserFunctions extension - Provides a set of dynamic parser functions that trigger on the current user.
- * @version 2.4 - 2012/06/02 (Based on ParserFunctions)
+ * @version 2.4.1 - 2012/07/17 (Based on ParserFunctions)
  *
  * @link http://www.mediawiki.org/wiki/Extension:UserFunctions Documentation
  *
@@ -42,7 +42,7 @@ $wgUFAllowedNamespaces = array(
 $wgExtensionCredits['parserhook'][] = array(
 	'path' => __FILE__,
 	'name' => 'UserFunctions',
-	'version' => '2.4',
+	'version' => '2.4.1',
 	'url' => 'https://www.mediawiki.org/wiki/Extension:UserFunctions',
 	'author' => array( 'Algorithm ', 'Toniher', 'Kghbln', 'Wikinaut', '...' ),
 	'descriptionmsg' => 'userfunctions-desc',
@@ -105,23 +105,10 @@ function wfRegisterUserFunctions( $parser ) {
 	}
 	else {
 		if ($wgUFEnableSpecialContexts) {
-			
-			$pagetitle = "";
-
-			if (class_exists("RequestContext")) {
-				$pagetitle = RequestContext::getMain()->getTitle();
-			}
-			else {
-				global $wgTitle;
-				$pagetitle = $wgTitle;				 
-			}
-
-			// Case when creating forms. Others?
-			if ($pagetitle->mTextform) {
-				if (preg_match("/^FormEdit/", $pagetitle->mTextform)) {
-					$process = true;
-				}
-			}
+		
+                        if ($special) {
+                                $process = true;
+                        }
 		}
 	}
 	
