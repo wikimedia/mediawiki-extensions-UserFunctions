@@ -12,6 +12,13 @@ $messages['en'] = array(
 	'userfunctions-desc' => 'Enhance parser with user functions',
 );
 
+/** Message documentation (Message documentation)
+ * @author Kghbln
+ */
+$messages['qqq'] = array(
+	'userfunctions-desc' => '{{desc}}',
+);
+
 /** Asturian (asturianu)
  * @author Xuacu
  */
