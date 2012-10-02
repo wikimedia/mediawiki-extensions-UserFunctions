@@ -26,7 +26,7 @@ $messages['ast'] = array(
 	'userfunctions-desc' => "Ameyora l'análisis sintáuticu con funciones del usuariu",
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author EugeneZelenko
  * @author Wizardist
  */
@@ -176,7 +176,7 @@ $messages['tl'] = array(
 	'userfunctions-desc' => 'Painamin ang pambanghay sa pamamagitan ng mga tungkulin ng tagagamit',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author Hzy980512
  */
 $messages['zh-hans'] = array(
