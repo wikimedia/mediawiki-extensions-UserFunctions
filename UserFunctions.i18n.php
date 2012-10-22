@@ -183,8 +183,8 @@ $messages['zh-hans'] = array(
 	'userfunctions-desc' => '增强用户函数的解析器',
 );
 
-/** Traditional Chinese (中文（繁體）‎) */
+/** Traditional Chinese (中文（繁體）‎)
+ */
 $messages['zh-hant'] = array(
 	'userfunctions-desc' => '增強用戶函數的解析器',
 );
-
