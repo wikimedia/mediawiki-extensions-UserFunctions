@@ -1,17 +1,17 @@
 <?php
 
 class ExtUserFunctions {
-	
+
 	/**
 	 * @param $parser Parser
 	 * @return bool
 	 */
-	
+
 	public static function clearState( $parser ) {
 		$parser->pf_ifexist_breakdown = array();
 		return true;
 	}
-	
+
 	/**
 	 * Register ParserClearState hook.
 	 * We defer this until needed to avoid the loading of the code of this file
@@ -25,12 +25,12 @@ class ExtUserFunctions {
 			$done = true;
 		}
 	}
-	
+
 	/**
 	 * @return UserObj
 	 * Using $wgUser Incompatibility with SMW using via $parser
 	**/
-	
+
 	private static function getUserObj() {
 		global $wgUser;
 		return $wgUser;
@@ -43,11 +43,10 @@ class ExtUserFunctions {
 	 * @return string
 	 */
 	public static function ifanonObj( $parser, $frame, $args ) {
-		
 		$parser->disableCache();
 		$pUser = self::getUserObj();
 
-		if($pUser->isAnon()){
+		if( $pUser->isAnon() ){
 			return isset( $args[0] ) ? trim( $frame->expand( $args[0] ) ) : '';
 		} else {
 			return isset( $args[1] ) ? trim( $frame->expand( $args[1] ) ) : '';
@@ -61,11 +60,10 @@ class ExtUserFunctions {
 	 * @return string
 	 */
 	public static function ifblockedObj( $parser, $frame, $args ) {
-		
 		$parser->disableCache();
 		$pUser = self::getUserObj();
 
-		if($pUser->isBlocked()){
+		if( $pUser->isBlocked() ){
 			return isset( $args[0] ) ? trim( $frame->expand( $args[0] ) ) : '';
 		} else {
 			return isset( $args[1] ) ? trim( $frame->expand( $args[1] ) ) : '';
@@ -79,11 +77,10 @@ class ExtUserFunctions {
 	 * @return string
 	 */
 	public static function ifsysopObj( $parser, $frame, $args ) {
-		
 		$parser->disableCache();
 		$pUser = self::getUserObj();
 
-		if($pUser->isAllowed('protect')){
+		if( $pUser->isAllowed( 'protect' ) ){
 			return isset( $args[0] ) ? trim( $frame->expand( $args[0] ) ) : '';
 		} else {
 			return isset( $args[1] ) ? trim( $frame->expand( $args[1] ) ) : '';
@@ -96,21 +93,20 @@ class ExtUserFunctions {
 	 * @param $args array
 	 * @return string
 	 */
-	 public static function ifingroupObj ( $parser, $frame, $args ) {
-		
+	public static function ifingroupObj ( $parser, $frame, $args ) {
 		$parser->disableCache();
 		$pUser = self::getUserObj();
 
 		$grp = isset( $args[0] ) ? trim( $frame->expand( $args[0] ) ) : '';
 
-		if($grp!=='') {
+		if( $grp!=='' ) {
 			# Considering multiple groups
 			$allgrp = explode(",", $grp);
 
-			foreach ($allgrp as $elgrp) {
-				if (in_array(trim($elgrp),$pUser->getEffectiveGroups())){
-        	                        return isset( $args[1] ) ? trim( $frame->expand( $args[1] ) ) : '';
-                        	}
+			foreach ( $allgrp as $elgrp ) {
+				if ( in_array( trim( $elgrp ), $pUser->getEffectiveGroups() ) ) {
+					return isset( $args[1] ) ? trim( $frame->expand( $args[1] ) ) : '';
+				}
 			}
 		}
 		return isset( $args[2] ) ? trim( $frame->expand( $args[2] ) ) : '';
@@ -122,11 +118,10 @@ class ExtUserFunctions {
 	 * @return String
 	 */
 	public static function realname( $parser, $alt = '' ) {
-		
 		$parser->disableCache();
 		$pUser = self::getUserObj();
 
-		if($pUser->isAnon() && $alt!=='') {
+		if( $pUser->isAnon() && $alt !== '' ) {
 			return $alt;
 		}
 		return $pUser->getRealName();
@@ -138,11 +133,10 @@ class ExtUserFunctions {
 	 * @return String
 	 */
 	public static function username( $parser, $alt = '' ) {
-		
 		$parser->disableCache();
 		$pUser = self::getUserObj();
 
-		if($pUser->isAnon() && $alt!=='') {
+		if( $pUser->isAnon() && $alt !== '' ) {
 			return $alt;
 		}
 		return $pUser->getName();
@@ -154,7 +148,6 @@ class ExtUserFunctions {
 	 * @return String
 	 */
 	public static function useremail( $parser, $alt = '' ) {
-		
 		$parser->disableCache();
 		$pUser = self::getUserObj();
 
@@ -170,12 +163,11 @@ class ExtUserFunctions {
 	 * @return String
 	 */
 	public static function nickname( $parser, $alt = '' ) {
-		
 		$parser->disableCache();
 		$pUser = self::getUserObj();
 
-		if($pUser->isAnon()) {
-			if ( $alt!=='') {
+		if( $pUser->isAnon() ) {
+			if ( $alt !== '' ) {
 				return $alt;
 			}
 			return $pUser->getName();
@@ -190,7 +182,6 @@ class ExtUserFunctions {
 	 * @return string
 	 */
 	public static function ip( $parser ) {
-		
 		$parser->disableCache();
 		return wfGetIP();
 	}
