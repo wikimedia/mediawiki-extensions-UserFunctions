@@ -176,6 +176,13 @@ $messages['tl'] = array(
 	'userfunctions-desc' => 'Painamin ang pambanghay sa pamamagitan ng mga tungkulin ng tagagamit',
 );
 
+/** Ukrainian (українська)
+ * @author Base
+ */
+$messages['uk'] = array(
+	'userfunctions-desc' => 'Розширює парсер функціями користувача',
+);
+
 /** Simplified Chinese (中文（简体）‎)
  * @author Hzy980512
  */
