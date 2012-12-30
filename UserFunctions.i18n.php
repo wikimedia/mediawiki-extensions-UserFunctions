@@ -169,6 +169,13 @@ $messages['pms'] = array(
 	'userfunctions-desc' => "Amelioré l'analisator con dle funsion utent",
 );
 
+/** Sinhala (සිංහල)
+ * @author පසිඳු කාවින්ද
+ */
+$messages['si'] = array(
+	'userfunctions-desc' => 'පරිශීලක කාර්යයන් සමඟ ව්‍යාකරණ විග්‍රහය ඉවැඩි කරන්න',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
