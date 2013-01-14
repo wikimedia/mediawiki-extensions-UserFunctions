@@ -169,6 +169,13 @@ $messages['pms'] = array(
 	'userfunctions-desc' => "Amelioré l'analisator con dle funsion utent",
 );
 
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'userfunctions-desc' => 'Analizzatore avanzate cu le funziune utende',
+);
+
 /** Sinhala (සිංහල)
  * @author පසිඳු කාවින්ද
  */
