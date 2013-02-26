@@ -6,7 +6,6 @@ class ExtUserFunctions {
 	 * @param $parser Parser
 	 * @return bool
 	 */
-
 	public static function clearState( $parser ) {
 		$parser->pf_ifexist_breakdown = array();
 		return true;
@@ -27,10 +26,9 @@ class ExtUserFunctions {
 	}
 
 	/**
-	 * @return UserObj
+	 * @return User
 	 * Using $wgUser Incompatibility with SMW using via $parser
-	**/
-
+	 **/
 	private static function getUserObj() {
 		global $wgUser;
 		return $wgUser;

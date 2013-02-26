@@ -36,7 +36,7 @@ $wgUFEnableSpecialContexts = true;
 
 /** Restrict to certain namespaces **/
 $wgUFAllowedNamespaces = array(
-        NS_MEDIAWIKI => true
+	NS_MEDIAWIKI => true
 );
 
 $wgExtensionCredits['parserhook'][] = array(
@@ -61,15 +61,15 @@ $wgHooks['ParserFirstCallInit'][] = 'wfRegisterUserFunctions';
 
 function wfRegisterUserFunctions( $parser ) {
 	global $wgUFEnablePersonalDataFunctions, $wgUFAllowedNamespaces, $wgUFEnableSpecialContexts;
-	
+
 	// Initialize NS
 	$cur_ns = -1;
-		
+
 	// Whether it's a Special Page or a Maintenance Script
 	$special = false;
 
 	// Depending on MW version
-	if (class_exists("RequestContext")) {		
+	if (class_exists("RequestContext")) {
 		$pagetitle = RequestContext::getMain()->getTitle();
 		if (method_exists($pagetitle, 'getNamespace' )) {
 			$cur_ns = $pagetitle->getNamespace();
@@ -95,26 +95,26 @@ function wfRegisterUserFunctions( $parser ) {
 
 	$process = false;
 
-	// As far it's not special case, check if current page NS is in the allowed list 
+	// As far it's not special case, check if current page NS is in the allowed list
 	if (!$special) {
 		if (isset($wgUFAllowedNamespaces[$cur_ns])) {
 			if ($wgUFAllowedNamespaces[$cur_ns]) {
 				$process = true;
-			} 
+			}
 		}
 	}
 	else {
 		if ($wgUFEnableSpecialContexts) {
-		
+
                         if ($special) {
                                 $process = true;
                         }
 		}
 	}
-	
+
 	if ($process) {
 		// These functions accept DOM-style arguments
-		
+
 		$parser->setFunctionHook( 'ifanon', 'ExtUserFunctions::ifanonObj', SFH_OBJECT_ARGS );
 		$parser->setFunctionHook( 'ifblocked', 'ExtUserFunctions::ifblockedObj', SFH_OBJECT_ARGS );
 		$parser->setFunctionHook( 'ifsysop', 'ExtUserFunctions::ifsysopObj', SFH_OBJECT_ARGS );
@@ -132,5 +132,3 @@ function wfRegisterUserFunctions( $parser ) {
 
 	return true;
 }
-
-
