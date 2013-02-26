@@ -101,8 +101,9 @@ class ExtUserFunctions {
 			# Considering multiple groups
 			$allgrp = explode(",", $grp);
 
+			$userGroups = $pUser->getEffectiveGroups();
 			foreach ( $allgrp as $elgrp ) {
-				if ( in_array( trim( $elgrp ), $pUser->getEffectiveGroups() ) ) {
+				if ( in_array( trim( $elgrp ), $userGroups ) ) {
 					return isset( $args[1] ) ? trim( $frame->expand( $args[1] ) ) : '';
 				}
 			}

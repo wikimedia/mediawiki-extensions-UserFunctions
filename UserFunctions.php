@@ -58,7 +58,6 @@ $wgHooks['ParserFirstCallInit'][] = 'wfRegisterUserFunctions';
  * @param $parser Parser
  * @return bool
  */
-
 function wfRegisterUserFunctions( $parser ) {
 	global $wgUFEnablePersonalDataFunctions, $wgUFAllowedNamespaces, $wgUFEnableSpecialContexts;
 
@@ -66,51 +65,27 @@ function wfRegisterUserFunctions( $parser ) {
 	$cur_ns = -1;
 
 	// Whether it's a Special Page or a Maintenance Script
-	$special = false;
+	$special = true;
 
 	// Depending on MW version
 	if (class_exists("RequestContext")) {
-		$pagetitle = RequestContext::getMain()->getTitle();
-		if (method_exists($pagetitle, 'getNamespace' )) {
-			$cur_ns = $pagetitle->getNamespace();
-			if ($cur_ns == -1) {
-				$special = true;
-			}
-		}
-		else {
-			$special = true;
-		}
+		$pageTitle = RequestContext::getMain()->getTitle();
 	} else {
 		global $wgTitle;
-		if (method_exists($wgTitle, 'getNamespace' )) {
-			$cur_ns = $wgTitle->getNamespace();
-			if ($cur_ns == -1) {
-				$special = true;
-			}
-		}
-		else {
-			$special = true;
-		}
+		$pageTitle = $wgTitle;
 	}
 
-	$process = false;
-
-	// As far it's not special case, check if current page NS is in the allowed list
-	if (!$special) {
-		if (isset($wgUFAllowedNamespaces[$cur_ns])) {
-			if ($wgUFAllowedNamespaces[$cur_ns]) {
-				$process = true;
-			}
-		}
+	if (method_exists($pageTitle, 'getNamespace' )) {
+		$cur_ns = $pageTitle->getNamespace();
+		$special = ($cur_ns == NS_SPECIAL);
 	}
 	else {
-		if ($wgUFEnableSpecialContexts) {
-
-                        if ($special) {
-                                $process = true;
-                        }
-		}
+		$special = true;
 	}
+
+	// As far it's not special case, check if current page NS is in the allowed list
+	$process = (!$special && isset($wgUFAllowedNamespaces[$cur_ns]) && $wgUFAllowedNamespaces[$cur_ns])
+		|| ($wgUFEnableSpecialContexts && $special)) {
 
 	if ($process) {
 		// These functions accept DOM-style arguments
