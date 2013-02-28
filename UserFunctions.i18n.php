@@ -14,9 +14,10 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation)
  * @author Kghbln
+ * @author Shirayuki
  */
 $messages['qqq'] = array(
-	'userfunctions-desc' => '{{desc}}',
+	'userfunctions-desc' => '{{desc|name=User Functions|url=http://www.mediawiki.org/wiki/Extension:UserFunctions}}',
 );
 
 /** Asturian (asturianu)
