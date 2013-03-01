@@ -134,6 +134,13 @@ $messages['lb'] = array(
 	'userfunctions-desc' => 'Verbessert de Parser mat Benotzer-Fonctiounen',
 );
 
+/** Minangkabau (Baso Minangkabau)
+ * @author Iwan Novirion
+ */
+$messages['min'] = array(
+	'userfunctions-desc' => 'Parser lanjuik jo fungsi pangguno',
+);
+
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */
