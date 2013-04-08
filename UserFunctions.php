@@ -1,7 +1,7 @@
 <?php
 /**
  * UserFunctions extension - Provides a set of dynamic parser functions that trigger on the current user.
- * @version 2.4.1 - 2012/07/17 (Based on ParserFunctions)
+ * @version 2.4.2 - 2013/04/08 (Based on ParserFunctions)
  *
  * @link http://www.mediawiki.org/wiki/Extension:UserFunctions Documentation
  *
@@ -42,9 +42,9 @@ $wgUFAllowedNamespaces = array(
 $wgExtensionCredits['parserhook'][] = array(
 	'path' => __FILE__,
 	'name' => 'UserFunctions',
-	'version' => '2.4.1',
+	'version' => '2.4.2',
 	'url' => 'https://www.mediawiki.org/wiki/Extension:UserFunctions',
-	'author' => array( 'Algorithm ', 'Toniher', 'Kghbln', 'Wikinaut', '...' ),
+	'author' => array( 'Algorithm ', 'Toniher', 'Kghbln', 'Wikinaut', 'Reedy', '...' ),
 	'descriptionmsg' => 'userfunctions-desc',
 );
 
@@ -58,6 +58,7 @@ $wgHooks['ParserFirstCallInit'][] = 'wfRegisterUserFunctions';
  * @param $parser Parser
  * @return bool
  */
+
 function wfRegisterUserFunctions( $parser ) {
 	global $wgUFEnablePersonalDataFunctions, $wgUFAllowedNamespaces, $wgUFEnableSpecialContexts;
 
@@ -65,27 +66,51 @@ function wfRegisterUserFunctions( $parser ) {
 	$cur_ns = -1;
 
 	// Whether it's a Special Page or a Maintenance Script
-	$special = true;
+	$special = false;
 
 	// Depending on MW version
 	if (class_exists("RequestContext")) {
-		$pageTitle = RequestContext::getMain()->getTitle();
+		$pagetitle = RequestContext::getMain()->getTitle();
+		if (method_exists($pagetitle, 'getNamespace' )) {
+			$cur_ns = $pagetitle->getNamespace();
+			if ($cur_ns == -1) {
+				$special = true;
+			}
+		}
+		else {
+			$special = true;
+		}
 	} else {
 		global $wgTitle;
-		$pageTitle = $wgTitle;
+		if (method_exists($wgTitle, 'getNamespace' )) {
+			$cur_ns = $wgTitle->getNamespace();
+			if ($cur_ns == -1) {
+				$special = true;
+			}
+		}
+		else {
+			$special = true;
+		}
 	}
 
-	if (method_exists($pageTitle, 'getNamespace' )) {
-		$cur_ns = $pageTitle->getNamespace();
-		$special = ($cur_ns == NS_SPECIAL);
-	}
-	else {
-		$special = true;
-	}
+	$process = false;
 
 	// As far it's not special case, check if current page NS is in the allowed list
-	$process = (!$special && isset($wgUFAllowedNamespaces[$cur_ns]) && $wgUFAllowedNamespaces[$cur_ns])
-		|| ($wgUFEnableSpecialContexts && $special)) {
+	if (!$special) {
+		if (isset($wgUFAllowedNamespaces[$cur_ns])) {
+			if ($wgUFAllowedNamespaces[$cur_ns]) {
+				$process = true;
+			}
+		}
+	}
+	else {
+		if ($wgUFEnableSpecialContexts) {
+
+                        if ($special) {
+                                $process = true;
+                        }
+		}
+	}
 
 	if ($process) {
 		// These functions accept DOM-style arguments
