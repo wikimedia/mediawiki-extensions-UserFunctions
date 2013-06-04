@@ -184,6 +184,13 @@ $messages['roa-tara'] = array(
 	'userfunctions-desc' => 'Analizzatore avanzate cu le funziune utende',
 );
 
+/** Russian (русский)
+ * @author Putnik
+ */
+$messages['ru'] = array(
+	'userfunctions-desc' => 'Добавление пользовательских функций в парсер',
+);
+
 /** Sinhala (සිංහල)
  * @author පසිඳු කාවින්ද
  */
