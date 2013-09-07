@@ -177,6 +177,13 @@ $messages['pms'] = array(
 	'userfunctions-desc' => "Amelioré l'analisator con dle funsion utent",
 );
 
+/** Brazilian Portuguese (português do Brasil)
+ * @author Cainamarques
+ */
+$messages['pt-br'] = array(
+	'userfunctions-desc' => 'Melhora o analisador (parser) com funções sintáticas sobre o usuário',
+);
+
 /** tarandíne (tarandíne)
  * @author Joetaras
  */
