@@ -129,9 +129,10 @@ $messages['ksh'] = array(
 
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
+ * @author Soued031
  */
 $messages['lb'] = array(
-	'userfunctions-desc' => 'Verbessert de Parser mat Benotzer-Fonctiounen',
+	'userfunctions-desc' => 'Verbessert de Parser mat Benotzerfunktiounen',
 );
 
 /** Minangkabau (Baso Minangkabau)
