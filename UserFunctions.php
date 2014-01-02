@@ -62,35 +62,13 @@ $wgHooks['ParserFirstCallInit'][] = 'wfRegisterUserFunctions';
 function wfRegisterUserFunctions( $parser ) {
 	global $wgUFEnablePersonalDataFunctions, $wgUFAllowedNamespaces, $wgUFEnableSpecialContexts;
 
-	// Initialize NS
-	$cur_ns = -1;
-
 	// Whether it's a Special Page or a Maintenance Script
 	$special = false;
 
-	// Depending on MW version
-	if (class_exists("RequestContext")) {
-		$pagetitle = RequestContext::getMain()->getTitle();
-		if (method_exists($pagetitle, 'getNamespace' )) {
-			$cur_ns = $pagetitle->getNamespace();
-			if ($cur_ns == -1) {
-				$special = true;
-			}
-		}
-		else {
-			$special = true;
-		}
-	} else {
-		global $wgTitle;
-		if (method_exists($wgTitle, 'getNamespace' )) {
-			$cur_ns = $wgTitle->getNamespace();
-			if ($cur_ns == -1) {
-				$special = true;
-			}
-		}
-		else {
-			$special = true;
-		}
+	// Initialize NS
+	$cur_ns = RequestContext::getMain()->getTitle()->getNamespace();
+	if ( $cur_ns == -1 ) {
+		$special = true;
 	}
 
 	$process = false;
