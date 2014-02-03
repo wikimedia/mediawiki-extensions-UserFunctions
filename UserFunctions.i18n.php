@@ -63,6 +63,13 @@ $messages['es'] = array(
 	'userfunctions-desc' => 'Mejorar el analizador (parser) con funciones de usuario',
 );
 
+/** Persian (فارسی)
+ * @author Armin1392
+ */
+$messages['fa'] = array(
+	'userfunctions-desc' => 'افزایش تجزیه کننده با فعالیت کاربر',
+);
+
 /** French (français)
  * @author Gomoko
  */
