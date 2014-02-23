@@ -153,7 +153,7 @@ $messages['min'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
-	'userfunctions-desc' => 'Проширување на можностите на парсерот со кориснички функции',
+	'userfunctions-desc' => 'Проширување на можностите на расчленувачот со кориснички функции',
 );
 
 /** Malay (Bahasa Melayu)
