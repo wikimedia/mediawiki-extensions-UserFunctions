@@ -1,7 +1,7 @@
 <?php
 /**
  * UserFunctions extension - Provides a set of dynamic parser functions that trigger on the current user.
- * @version 2.4.2 - 2013/04/08 (Based on ParserFunctions)
+ * @version 2.4.3 - 2014/03/16 (Based on ParserFunctions)
  *
  * @link http://www.mediawiki.org/wiki/Extension:UserFunctions Documentation
  *
@@ -14,6 +14,7 @@
  * @author Wikinaut
  * @author Kghbln
  * @author Toniher
+ * @author Uckelman
  * @copyright (C) 2006 Algorithm
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
@@ -42,7 +43,7 @@ $wgUFAllowedNamespaces = array(
 $wgExtensionCredits['parserhook'][] = array(
 	'path' => __FILE__,
 	'name' => 'UserFunctions',
-	'version' => '2.4.2',
+	'version' => '2.4.3',
 	'url' => 'https://www.mediawiki.org/wiki/Extension:UserFunctions',
 	'author' => array( 'Algorithm ', 'Toniher', 'Kghbln', 'Wikinaut', 'Reedy', '...' ),
 	'descriptionmsg' => 'userfunctions-desc',
@@ -66,7 +67,8 @@ function wfRegisterUserFunctions( $parser ) {
 	$special = false;
 
 	// Initialize NS
-	$cur_ns = RequestContext::getMain()->getTitle()->getNamespace();
+	$title = RequestContext::getMain()->getTitle();
+	$cur_ns = $title === null ? -1 : $title->getNamespace();
 	if ( $cur_ns == -1 ) {
 		$special = true;
 	}
