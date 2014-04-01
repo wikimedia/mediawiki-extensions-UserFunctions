@@ -43,13 +43,14 @@ $wgUFAllowedNamespaces = array(
 $wgExtensionCredits['parserhook'][] = array(
 	'path' => __FILE__,
 	'name' => 'UserFunctions',
-	'version' => '2.4.3',
+	'version' => '2.5.0',
 	'url' => 'https://www.mediawiki.org/wiki/Extension:UserFunctions',
 	'author' => array( 'Algorithm ', 'Toniher', 'Kghbln', 'Wikinaut', 'Reedy', '...' ),
 	'descriptionmsg' => 'userfunctions-desc',
 );
 
 $wgAutoloadClasses['ExtUserFunctions'] = dirname(__FILE__).'/UserFunctions_body.php';
+$wgMessagesDirs['UserFunctions'] = __DIR__ . '/i18n';
 $wgExtensionMessagesFiles['UserFunctions'] = dirname( __FILE__ ) . '/UserFunctions.i18n.php';
 $wgExtensionMessagesFiles['UserFunctionsMagic'] = dirname( __FILE__ ) . '/UserFunctions.i18n.magic.php';
 
