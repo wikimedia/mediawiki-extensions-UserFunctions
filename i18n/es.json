@@ -1,8 +1,8 @@
 {
-    "@metadata": {
-        "authors": [
-            "Armando-Martin"
-        ]
-    },
-    "userfunctions-desc": "Mejorar el analizador (parser) con funciones de usuario"
+	"@metadata": {
+		"authors": [
+			"Armando-Martin"
+		]
+	},
+	"userfunctions-desc": "Mejorar el analizador (parser) con funciones de usuario"
 }
