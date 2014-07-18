@@ -181,9 +181,9 @@ class ExtUserFunctions {
 	 * @return string
 	 */
 	public static function ip( $parser ) {
-		global $wgRequest;
 		$parser->disableCache();
-		return $wgRequest->getIP();
+		$request = self::getUserObj()->getRequest();
+		return $request->getIP();
 	}
 
 }
