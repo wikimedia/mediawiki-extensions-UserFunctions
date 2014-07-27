@@ -1,4 +1,8 @@
 {
-	"@metadata": [],
-	"userfunctions-desc": "增強用戶函數的解析器"
+	"@metadata": {
+		"authors": [
+			"LNDDYL"
+		]
+	},
+	"userfunctions-desc": "增強使用者函數的解析器"
 }
