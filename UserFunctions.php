@@ -1,7 +1,7 @@
 <?php
 /**
  * UserFunctions extension - Provides a set of dynamic parser functions that trigger on the current user.
- * @version 2.4.3 - 2014/03/16 (Based on ParserFunctions)
+ * @version 2.6.0 - 2014/09/18 (Based on ParserFunctions)
  *
  * @link http://www.mediawiki.org/wiki/Extension:UserFunctions Documentation
  *
@@ -23,38 +23,42 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	die( 'This file is a MediaWiki extension, it is not a valid entry point' );
 }
 
-/**
- * Enable Personal Data Functions
- * Set this to true if you want your users to be able to use the following functions:
- * realname, username, useremail, nickname, ip
- * WARNING: These functions can be used to leak your user's email addresses and real names.
- * If unsure, don't activate these features.
-**/
-$wgUFEnablePersonalDataFunctions = false;
+//self executing anonymous function to prevent global scope assumptions
+call_user_func( function() {
 
-/** Allow to be used in places such as SF form **/
-$wgUFEnableSpecialContexts = true;
+	/**
+	 * Enable Personal Data Functions
+	 * Set this to true if you want your users to be able to use the following functions:
+	 * realname, username, useremail, nickname, ip
+	 * WARNING: These functions can be used to leak your user's email addresses and real names.
+	 * If unsure, don't activate these features.
+	**/
+	$GLOBALS['wgUFEnablePersonalDataFunctions'] = false;
 
-/** Restrict to certain namespaces **/
-$wgUFAllowedNamespaces = array(
-	NS_MEDIAWIKI => true
-);
+	/** Allow to be used in places such as SF form **/
+	$GLOBALS['wgUFEnableSpecialContexts'] = true;
 
-$wgExtensionCredits['parserhook'][] = array(
-	'path' => __FILE__,
-	'name' => 'UserFunctions',
-	'version' => '2.5.0',
-	'url' => 'https://www.mediawiki.org/wiki/Extension:UserFunctions',
-	'author' => array( 'Algorithm ', 'Toniher', 'Kghbln', 'Wikinaut', 'Reedy', '...' ),
-	'descriptionmsg' => 'userfunctions-desc',
-);
+	/** Restrict to certain namespaces **/
+	$GLOBALS['wgUFAllowedNamespaces'] = array(
+		NS_MEDIAWIKI => true
+	);
 
-$wgAutoloadClasses['ExtUserFunctions'] = dirname(__FILE__).'/UserFunctions_body.php';
-$wgMessagesDirs['UserFunctions'] = __DIR__ . '/i18n';
-$wgExtensionMessagesFiles['UserFunctions'] = dirname( __FILE__ ) . '/UserFunctions.i18n.php';
-$wgExtensionMessagesFiles['UserFunctionsMagic'] = dirname( __FILE__ ) . '/UserFunctions.i18n.magic.php';
+	$GLOBALS['wgExtensionCredits']['parserhook'][] = array(
+		'path' => __FILE__,
+		'name' => 'UserFunctions',
+		'version' => '2.6.0',
+		'url' => 'https://www.mediawiki.org/wiki/Extension:UserFunctions',
+		'author' => array( 'Algorithm ', 'Toniher', 'Kghbln', 'Wikinaut', 'Reedy', '...' ),
+		'descriptionmsg' => 'userfunctions-desc',
+	);
 
-$wgHooks['ParserFirstCallInit'][] = 'wfRegisterUserFunctions';
+	$GLOBALS['wgAutoloadClasses']['ExtUserFunctions'] = dirname(__FILE__).'/UserFunctions_body.php';
+	$GLOBALS['wgMessagesDirs']['UserFunctions'] = __DIR__ . '/i18n';
+	$GLOBALS['wgExtensionMessagesFiles']['UserFunctions'] = dirname( __FILE__ ) . '/UserFunctions.i18n.php';
+	$GLOBALS['wgExtensionMessagesFiles']['UserFunctionsMagic'] = dirname( __FILE__ ) . '/UserFunctions.i18n.magic.php';
+
+	$GLOBALS['wgHooks']['ParserFirstCallInit'][] = 'wfRegisterUserFunctions';
+});
 
 /**
  * @param $parser Parser
@@ -77,23 +81,22 @@ function wfRegisterUserFunctions( $parser ) {
 	$process = false;
 
 	// As far it's not special case, check if current page NS is in the allowed list
-	if (!$special) {
-		if (isset($wgUFAllowedNamespaces[$cur_ns])) {
-			if ($wgUFAllowedNamespaces[$cur_ns]) {
+	if ( !$special ) {
+		if ( isset( $wgUFAllowedNamespaces[$cur_ns] ) ) {
+			if ( $wgUFAllowedNamespaces[$cur_ns] ) {
 				$process = true;
 			}
 		}
 	}
 	else {
-		if ($wgUFEnableSpecialContexts) {
-
-                        if ($special) {
-                                $process = true;
-                        }
+		if ( $wgUFEnableSpecialContexts ) {
+			if ( $special ) {
+					$process = true;
+			}
 		}
 	}
 
-	if ($process) {
+	if ( $process ) {
 		// These functions accept DOM-style arguments
 
 		$parser->setFunctionHook( 'ifanon', 'ExtUserFunctions::ifanonObj', SFH_OBJECT_ARGS );
