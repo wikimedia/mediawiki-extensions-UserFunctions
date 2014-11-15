@@ -1,7 +1,7 @@
 <?php
 /**
  * UserFunctions extension - Provides a set of dynamic parser functions that trigger on the current user.
- * @version 2.6.0 - 2014/09/18 (Based on ParserFunctions)
+ * @version 2.6.1 - 2014/11/15 (Based on ParserFunctions)
  *
  * @link http://www.mediawiki.org/wiki/Extension:UserFunctions Documentation
  *
@@ -46,16 +46,21 @@ call_user_func( function() {
 	$GLOBALS['wgExtensionCredits']['parserhook'][] = array(
 		'path' => __FILE__,
 		'name' => 'UserFunctions',
-		'version' => '2.6.0',
+		'version' => '2.6.1',
 		'url' => 'https://www.mediawiki.org/wiki/Extension:UserFunctions',
-		'author' => array( 'Algorithm ', 'Toniher', 'Kghbln', 'Wikinaut', 'Reedy', '...' ),
+		'author' => array(
+			'Ross McClure',
+			'Toni Hermoso Pulido',
+			'...'
+			),
 		'descriptionmsg' => 'userfunctions-desc',
+		'license-name' => 'GPL-2.0+'
 	);
 
-	$GLOBALS['wgAutoloadClasses']['ExtUserFunctions'] = dirname(__FILE__).'/UserFunctions_body.php';
+	$GLOBALS['wgAutoloadClasses']['ExtUserFunctions'] = __DIR__ .'/UserFunctions_body.php';
 	$GLOBALS['wgMessagesDirs']['UserFunctions'] = __DIR__ . '/i18n';
-	$GLOBALS['wgExtensionMessagesFiles']['UserFunctions'] = dirname( __FILE__ ) . '/UserFunctions.i18n.php';
-	$GLOBALS['wgExtensionMessagesFiles']['UserFunctionsMagic'] = dirname( __FILE__ ) . '/UserFunctions.i18n.magic.php';
+	$GLOBALS['wgExtensionMessagesFiles']['UserFunctions'] = __DIR__ . '/UserFunctions.i18n.php';
+	$GLOBALS['wgExtensionMessagesFiles']['UserFunctionsMagic'] = __DIR__ . '/UserFunctions.i18n.magic.php';
 
 	$GLOBALS['wgHooks']['ParserFirstCallInit'][] = 'wfRegisterUserFunctions';
 });
