@@ -99,10 +99,10 @@ function wfRegisterUserFunctions( $parser ) {
 	if ( $process ) {
 		// These functions accept DOM-style arguments
 
-		$parser->setFunctionHook( 'ifanon', 'ExtUserFunctions::ifanonObj', SFH_OBJECT_ARGS );
-		$parser->setFunctionHook( 'ifblocked', 'ExtUserFunctions::ifblockedObj', SFH_OBJECT_ARGS );
-		$parser->setFunctionHook( 'ifsysop', 'ExtUserFunctions::ifsysopObj', SFH_OBJECT_ARGS );
-		$parser->setFunctionHook( 'ifingroup', 'ExtUserFunctions::ifingroupObj', SFH_OBJECT_ARGS );
+		$parser->setFunctionHook( 'ifanon', 'ExtUserFunctions::ifanonObj', Parser::SFH_OBJECT_ARGS );
+		$parser->setFunctionHook( 'ifblocked', 'ExtUserFunctions::ifblockedObj', Parser::SFH_OBJECT_ARGS );
+		$parser->setFunctionHook( 'ifsysop', 'ExtUserFunctions::ifsysopObj', Parser::SFH_OBJECT_ARGS );
+		$parser->setFunctionHook( 'ifingroup', 'ExtUserFunctions::ifingroupObj', Parser::SFH_OBJECT_ARGS );
 
 		if ($wgUFEnablePersonalDataFunctions) {
 			$parser->setFunctionHook( 'realname', 'ExtUserFunctions::realname' );
