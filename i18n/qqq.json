@@ -2,8 +2,9 @@
 	"@metadata": {
 		"authors": [
 			"Kghbln",
-			"Shirayuki"
+			"Shirayuki",
+			"Umherirrender"
 		]
 	},
-	"userfunctions-desc": "{{desc|name=User Functions|url=http://www.mediawiki.org/wiki/Extension:UserFunctions}}"
+	"userfunctions-desc": "{{desc|name=User Functions|url=https://www.mediawiki.org/wiki/Extension:UserFunctions}}"
 }
