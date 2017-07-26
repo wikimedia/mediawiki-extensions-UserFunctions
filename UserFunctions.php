@@ -1,9 +1,11 @@
 <?php
 /**
  * UserFunctions extension - Provides a set of dynamic parser functions that trigger on the current user.
- * @version 2.6.1 - 2014/11/15 (Based on ParserFunctions)
+ * @version 2.7.0 - 2017/07/26 (Based on ParserFunctions)
  *
- * @link http://www.mediawiki.org/wiki/Extension:UserFunctions Documentation
+ * @link https://www.mediawiki.org/wiki/Extension:UserFunctions Documentation
+ * @link https://www.mediawiki.org/wiki/Extension_talk:UserFunctions Support
+ * @link https://phabricator.wikimedia.org/diffusion/EUFU/ Source code
  *
  * @file UserFunctions.php
  * @ingroup Extensions
@@ -16,9 +18,10 @@
  * @author Toniher
  * @author Uckelman
  * @copyright (C) 2006 Algorithm
- * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
+ * @license https://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
+// Ensure that the script cannot be executed outside of MediaWiki.
 if ( !defined( 'MEDIAWIKI' ) ) {
 	die( 'This file is a MediaWiki extension, it is not a valid entry point' );
 }
@@ -46,7 +49,7 @@ call_user_func( function() {
 	$GLOBALS['wgExtensionCredits']['parserhook'][] = array(
 		'path' => __FILE__,
 		'name' => 'UserFunctions',
-		'version' => '2.6.1',
+		'version' => '2.7.0',
 		'url' => 'https://www.mediawiki.org/wiki/Extension:UserFunctions',
 		'author' => array(
 			'Ross McClure',
@@ -59,7 +62,6 @@ call_user_func( function() {
 
 	$GLOBALS['wgAutoloadClasses']['ExtUserFunctions'] = __DIR__ .'/UserFunctions_body.php';
 	$GLOBALS['wgMessagesDirs']['UserFunctions'] = __DIR__ . '/i18n';
-	$GLOBALS['wgExtensionMessagesFiles']['UserFunctions'] = __DIR__ . '/UserFunctions.i18n.php';
 	$GLOBALS['wgExtensionMessagesFiles']['UserFunctionsMagic'] = __DIR__ . '/UserFunctions.i18n.magic.php';
 
 	$GLOBALS['wgHooks']['ParserFirstCallInit'][] = 'wfRegisterUserFunctions';
