@@ -57,7 +57,7 @@ call_user_func( function() {
 			'...'
 			),
 		'descriptionmsg' => 'userfunctions-desc',
-		'license-name' => 'GPL-2.0+'
+		'license-name' => 'GPL-2.0-or-later'
 	);
 
 	$GLOBALS['wgAutoloadClasses']['ExtUserFunctions'] = __DIR__ .'/UserFunctions_body.php';

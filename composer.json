@@ -7,7 +7,7 @@
 		"User"
 	],
 	"homepage": "https://www.mediawiki.org/wiki/Extension:UserFunctions",
-	"license": "GPL-2.0+",
+	"license": "GPL-2.0-or-later",
 	"require": {
 		"php": ">=5.3.0",
 		"composer/installers": "1.*,>=1.0.1"
