@@ -41,7 +41,7 @@ class ExtUserFunctions {
 	 * @return string
 	 */
 	public static function ifanonObj( $parser, $frame, $args ) {
-		$parser->disableCache();
+		$parser->getOutput()->updateCacheExpiry( 0 );
 		$pUser = self::getUserObj();
 
 		if( $pUser->isAnon() ){
@@ -58,7 +58,7 @@ class ExtUserFunctions {
 	 * @return string
 	 */
 	public static function ifblockedObj( $parser, $frame, $args ) {
-		$parser->disableCache();
+		$parser->getOutput()->updateCacheExpiry( 0 );
 		$pUser = self::getUserObj();
 
 		if( $pUser->isBlocked() ){
@@ -75,7 +75,7 @@ class ExtUserFunctions {
 	 * @return string
 	 */
 	public static function ifsysopObj( $parser, $frame, $args ) {
-		$parser->disableCache();
+		$parser->getOutput()->updateCacheExpiry( 0 );
 		$pUser = self::getUserObj();
 
 		if( $pUser->isAllowed( 'protect' ) ){
@@ -92,7 +92,7 @@ class ExtUserFunctions {
 	 * @return string
 	 */
 	public static function ifingroupObj ( $parser, $frame, $args ) {
-		$parser->disableCache();
+		$parser->getOutput()->updateCacheExpiry( 0 );
 		$pUser = self::getUserObj();
 
 		$grp = isset( $args[0] ) ? trim( $frame->expand( $args[0] ) ) : '';
@@ -117,7 +117,7 @@ class ExtUserFunctions {
 	 * @return String
 	 */
 	public static function realname( $parser, $alt = '' ) {
-		$parser->disableCache();
+		$parser->getOutput()->updateCacheExpiry( 0 );
 		$pUser = self::getUserObj();
 
 		if( $pUser->isAnon() && $alt !== '' ) {
@@ -132,7 +132,7 @@ class ExtUserFunctions {
 	 * @return String
 	 */
 	public static function username( $parser, $alt = '' ) {
-		$parser->disableCache();
+		$parser->getOutput()->updateCacheExpiry( 0 );
 		$pUser = self::getUserObj();
 
 		if( $pUser->isAnon() && $alt !== '' ) {
@@ -147,7 +147,7 @@ class ExtUserFunctions {
 	 * @return String
 	 */
 	public static function useremail( $parser, $alt = '' ) {
-		$parser->disableCache();
+		$parser->getOutput()->updateCacheExpiry( 0 );
 		$pUser = self::getUserObj();
 
 		if($pUser->isAnon() && $alt!=='') {
@@ -162,7 +162,7 @@ class ExtUserFunctions {
 	 * @return String
 	 */
 	public static function nickname( $parser, $alt = '' ) {
-		$parser->disableCache();
+		$parser->getOutput()->updateCacheExpiry( 0 );
 		$pUser = self::getUserObj();
 
 		if( $pUser->isAnon() ) {
@@ -181,7 +181,7 @@ class ExtUserFunctions {
 	 * @return string
 	 */
 	public static function ip( $parser ) {
-		$parser->disableCache();
+		$parser->getOutput()->updateCacheExpiry( 0 );
 		$request = self::getUserObj()->getRequest();
 		return $request->getIP();
 	}
