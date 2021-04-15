@@ -1,13 +1,16 @@
 <?php
 
+use MediaWiki\MediaWikiServices;
+
 class ExtUserFunctions {
 
 	/**
-	 * @param $parser Parser
+	 * @param Parser $parser
 	 * @return bool
 	 */
-	public static function clearState( $parser ) {
-		$parser->pf_ifexist_breakdown = array();
+	public static function clearState( Parser $parser ) {
+		$parser->pf_ifexist_breakdown = [];
+
 		return true;
 	}
 
@@ -18,33 +21,34 @@ class ExtUserFunctions {
 	 */
 	public static function registerClearHook() {
 		static $done = false;
-		if( !$done ) {
+
+		if ( !$done ) {
 			global $wgHooks;
+
 			$wgHooks['ParserClearState'][] = __CLASS__ . '::clearState';
+
 			$done = true;
 		}
 	}
 
 	/**
 	 * @return User
-	 * Using $wgUser Incompatibility with SMW using via $parser
-	 **/
+	 */
 	private static function getUserObj() {
-		global $wgUser;
-		return $wgUser;
+		return RequestContext::getMain()->getUser();
 	}
 
 	/**
-	 * @param $parser Parser
-	 * @param $frame PPFrame
-	 * @param $args array
+	 * @param Parser $parser
+	 * @param PPFrame $frame
+	 * @param array $args
 	 * @return string
 	 */
-	public static function ifanonObj( $parser, $frame, $args ) {
+	public static function ifanonObj( Parser $parser, PPFrame $frame, array $args ) {
 		$parser->getOutput()->updateCacheExpiry( 0 );
 		$pUser = self::getUserObj();
 
-		if( $pUser->isAnon() ){
+		if ( !$pUser->isRegistered() ) {
 			return isset( $args[0] ) ? trim( $frame->expand( $args[0] ) ) : '';
 		} else {
 			return isset( $args[1] ) ? trim( $frame->expand( $args[1] ) ) : '';
@@ -52,16 +56,16 @@ class ExtUserFunctions {
 	}
 
 	/**
-	 * @param $parser Parser
-	 * @param $frame PPFrame
-	 * @param $args array
+	 * @param Parser $parser
+	 * @param PPFrame $frame
+	 * @param array $args
 	 * @return string
 	 */
-	public static function ifblockedObj( $parser, $frame, $args ) {
+	public static function ifblockedObj( Parser $parser, PPFrame $frame, array $args ) {
 		$parser->getOutput()->updateCacheExpiry( 0 );
 		$pUser = self::getUserObj();
 
-		if( $pUser->isBlocked() ){
+		if ( $pUser->getBlock() ) {
 			return isset( $args[0] ) ? trim( $frame->expand( $args[0] ) ) : '';
 		} else {
 			return isset( $args[1] ) ? trim( $frame->expand( $args[1] ) ) : '';
@@ -69,16 +73,16 @@ class ExtUserFunctions {
 	}
 
 	/**
-	 * @param $parser Parser
-	 * @param $frame PPFrame
-	 * @param $args array
+	 * @param Parser $parser
+	 * @param PPFrame $frame
+	 * @param array $args
 	 * @return string
 	 */
-	public static function ifsysopObj( $parser, $frame, $args ) {
+	public static function ifsysopObj( Parser $parser, PPFrame $frame, array $args ) {
 		$parser->getOutput()->updateCacheExpiry( 0 );
 		$pUser = self::getUserObj();
 
-		if( $pUser->isAllowed( 'protect' ) ){
+		if ( $pUser->isAllowed( 'protect' ) ) {
 			return isset( $args[0] ) ? trim( $frame->expand( $args[0] ) ) : '';
 		} else {
 			return isset( $args[1] ) ? trim( $frame->expand( $args[1] ) ) : '';
@@ -86,20 +90,20 @@ class ExtUserFunctions {
 	}
 
 	/**
-	 * @param $parser Parser
-	 * @param $frame PPFrame
-	 * @param $args array
+	 * @param Parser $parser
+	 * @param PPFrame $frame
+	 * @param array $args
 	 * @return string
 	 */
-	public static function ifingroupObj ( $parser, $frame, $args ) {
+	public static function ifingroupObj( Parser $parser, PPFrame $frame, array $args ) {
 		$parser->getOutput()->updateCacheExpiry( 0 );
 		$pUser = self::getUserObj();
 
 		$grp = isset( $args[0] ) ? trim( $frame->expand( $args[0] ) ) : '';
 
-		if( $grp!=='' ) {
+		if ( $grp !== '' ) {
 			# Considering multiple groups
-			$allgrp = explode(",", $grp);
+			$allgrp = explode( ',', $grp );
 
 			$userGroups = $pUser->getEffectiveGroups();
 			foreach ( $allgrp as $elgrp ) {
@@ -108,82 +112,140 @@ class ExtUserFunctions {
 				}
 			}
 		}
+
 		return isset( $args[2] ) ? trim( $frame->expand( $args[2] ) ) : '';
 	}
 
 	/**
-	 * @param $parser Parser
-	 * @param $alt string
-	 * @return String
+	 * @param Parser $parser
+	 * @param string $alt
+	 * @return string
 	 */
-	public static function realname( $parser, $alt = '' ) {
+	public static function realname( Parser $parser, string $alt = '' ) {
 		$parser->getOutput()->updateCacheExpiry( 0 );
 		$pUser = self::getUserObj();
 
-		if( $pUser->isAnon() && $alt !== '' ) {
+		if ( !$pUser->isRegistered() && $alt !== '' ) {
 			return $alt;
 		}
+
 		return $pUser->getRealName();
 	}
 
 	/**
-	 * @param $parser Parser
-	 * @param $alt string
-	 * @return String
+	 * @param Parser $parser
+	 * @param string $alt
+	 * @return string
 	 */
-	public static function username( $parser, $alt = '' ) {
+	public static function username( Parser $parser, string $alt = '' ) {
 		$parser->getOutput()->updateCacheExpiry( 0 );
 		$pUser = self::getUserObj();
 
-		if( $pUser->isAnon() && $alt !== '' ) {
+		if ( !$pUser->isRegistered() && $alt !== '' ) {
 			return $alt;
 		}
+
 		return $pUser->getName();
 	}
 
 	/**
-	 * @param $parser Parser
-	 * @param $alt string
-	 * @return String
+	 * @param Parser $parser
+	 * @param string $alt
+	 * @return string
 	 */
-	public static function useremail( $parser, $alt = '' ) {
+	public static function useremail( Parser $parser, string $alt = '' ) {
 		$parser->getOutput()->updateCacheExpiry( 0 );
 		$pUser = self::getUserObj();
 
-		if($pUser->isAnon() && $alt!=='') {
+		if ( !$pUser->isRegistered() && $alt !== '' ) {
 			return $alt;
 		}
+
 		return $pUser->getEmail();
 	}
 
 	/**
-	 * @param $parser Parser
-	 * @param $alt string
-	 * @return String
+	 * @param Parser $parser
+	 * @param string $alt
+	 * @return string
 	 */
-	public static function nickname( $parser, $alt = '' ) {
+	public static function nickname( Parser $parser, string $alt = '' ) {
 		$parser->getOutput()->updateCacheExpiry( 0 );
 		$pUser = self::getUserObj();
 
-		if( $pUser->isAnon() ) {
+		if ( !$pUser->isRegistered() ) {
 			if ( $alt !== '' ) {
 				return $alt;
 			}
+
 			return $pUser->getName();
 		}
-		$nickname = $pUser->getOption( 'nickname' );
+
+		$userOptionsLookup = MediaWikiServices::getInstance()->getUserOptionsLookup();
+
+		$nickname = $userOptionsLookup->getOption( $pUser, 'nickname' );
 		$nickname = $nickname === '' ? $pUser->getName() : $nickname;
+
 		return $nickname;
 	}
 
 	/**
-	 * @param $parser Parser
+	 * @param Parser $parser
 	 * @return string
 	 */
-	public static function ip( $parser ) {
+	public static function ip( Parser $parser ) {
 		$parser->getOutput()->updateCacheExpiry( 0 );
 		$request = self::getUserObj()->getRequest();
+
 		return $request->getIP();
 	}
 
+	/**
+	 * @param Parser $parser
+	 */
+	public static function onParserFirstCallInit( Parser $parser ) {
+		global $wgUFEnablePersonalDataFunctions, $wgUFAllowedNamespaces, $wgUFEnableSpecialContexts;
+
+		// Whether it's a Special Page or a Maintenance Script
+		$special = false;
+
+		// Initialize NS
+		$title = RequestContext::getMain()->getTitle();
+		$cur_ns = $title === null ? -1 : $title->getNamespace();
+
+		if ( $cur_ns == -1 ) {
+			$special = true;
+		}
+
+		$process = false;
+
+		// As far it's not special case, check if current page NS is in the allowed list
+		if ( !$special ) {
+			if ( isset( $wgUFAllowedNamespaces[$cur_ns] ) ) {
+				if ( $wgUFAllowedNamespaces[$cur_ns] ) {
+					$process = true;
+				}
+			}
+		} elseif ( $wgUFEnableSpecialContexts ) {
+			if ( $special ) {
+				$process = true;
+			}
+		}
+
+		if ( $process ) {
+			// These functions accept DOM-style arguments
+			$parser->setFunctionHook( 'ifanon', [ __CLASS__, 'ifanonObj' ], Parser::SFH_OBJECT_ARGS );
+			$parser->setFunctionHook( 'ifblocked', [ __CLASS__, 'ifblockedObj' ], Parser::SFH_OBJECT_ARGS );
+			$parser->setFunctionHook( 'ifsysop', [ __CLASS__, 'ifsysopObj' ], Parser::SFH_OBJECT_ARGS );
+			$parser->setFunctionHook( 'ifingroup', [ __CLASS__, 'ifingroupObj' ], Parser::SFH_OBJECT_ARGS );
+
+			if ( $wgUFEnablePersonalDataFunctions ) {
+				$parser->setFunctionHook( 'realname', [ __CLASS__, 'realname' ] );
+				$parser->setFunctionHook( 'username', [ __CLASS__, 'username' ] );
+				$parser->setFunctionHook( 'useremail', [ __CLASS__, 'useremail' ] );
+				$parser->setFunctionHook( 'nickname', [ __CLASS__, 'nickname' ] );
+				$parser->setFunctionHook( 'ip', [ __CLASS__, 'ip' ] );
+			}
+		}
+	}
 }

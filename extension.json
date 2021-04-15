@@ -1,0 +1,48 @@
+{
+	"name": "UserFunctions",
+	"version": "2.8.0",
+	"author": [
+		"Ross McClure",
+		"Toni Hermoso Pulido",
+		"Universal Omega",
+		"..."
+	],
+	"license-name": "GPL-2.0-or-later",
+	"url": "https://www.mediawiki.org/wiki/Extension:UserFunctions",
+	"descriptionmsg": "userfunctions-desc",
+	"type": "parserhook",
+	"requires": {
+		"MediaWiki": ">= 1.35.0"
+	},
+	"MessagesDirs": {
+		"UserFunctions": [
+			"i18n"
+		]
+	},
+	"ExtensionMessagesFiles": {
+		"UserFunctionsMagic": "UserFunctions.i18n.magic.php"
+	},
+	"AutoloadClasses": {
+		"ExtUserFunctions": "UserFunctions_body.php"
+	},
+	"config": {
+		"UFEnablePersonalDataFunctions": {
+			"value": false,
+			"description": "Set this to true if you want your users to be able to use the following functions: realname, username, useremail, nickname, ip."
+		},
+		"UFEnableSpecialContexts": {
+			"value": true,
+			"description": "Allow to be used in places such as SF form."
+		},
+		"UFAllowedNamespaces": {
+			"value": {
+				"8": true
+			},
+			"description": "Restricts to certain namespaces."
+		}
+	},
+	"Hooks": {
+		"ParserFirstCallInit": "ExtUserFunctions::onParserFirstCallInit"
+	},
+	"manifest_version": 2
+}
