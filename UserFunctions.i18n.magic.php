@@ -1,16 +1,16 @@
 <?php
 
-$magicWords = array();
+$magicWords = [];
 
 /** English (English) */
-$magicWords['en'] = array(
-	'ifanon'    => array( 0, 'ifanon' ),
-	'ifblocked' => array( 0, 'ifblocked' ),
-	'ifsysop'   => array( 0, 'ifsysop' ),
-	'realname'  => array( 0, 'realname' ),
-	'username'  => array( 0, 'username' ),
-	'useremail' => array( 0, 'useremail' ),
-	'nickname'  => array( 0, 'nickname' ),
-	'ifingroup' => array( 0, 'ifingroup' ),
-	'ip'        => array( 0, 'ip' ),
-);
+$magicWords['en'] = [
+	'ifanon'    => [ 0, 'ifanon' ],
+	'ifblocked' => [ 0, 'ifblocked' ],
+	'ifsysop'   => [ 0, 'ifsysop' ],
+	'realname'  => [ 0, 'realname' ],
+	'username'  => [ 0, 'username' ],
+	'useremail' => [ 0, 'useremail' ],
+	'nickname'  => [ 0, 'nickname' ],
+	'ifingroup' => [ 0, 'ifingroup' ],
+	'ip'        => [ 0, 'ip' ],
+];
