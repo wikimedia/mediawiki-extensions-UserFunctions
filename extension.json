@@ -38,6 +38,7 @@
 			"value": {
 				"8": true
 			},
+			"merge_strategy": "array_plus",
 			"description": "Restricts to certain namespaces."
 		}
 	},
