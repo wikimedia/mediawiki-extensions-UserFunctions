@@ -1,8 +1,9 @@
 {
 	"@metadata": {
 		"authors": [
-			"By erdo can"
+			"By erdo can",
+			"BaRaN6161 TURK"
 		]
 	},
-	"userfunctions-desc": "Kullanıcı işlevleriyle derleyiciyi geliştirin"
+	"userfunctions-desc": "Ayrıştırıcıyı kullanıcı işlevleriyle geliştirin"
 }
