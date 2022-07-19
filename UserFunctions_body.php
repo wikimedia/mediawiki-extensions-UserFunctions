@@ -118,6 +118,9 @@ class ExtUserFunctions {
 	}
 
 	/**
+	 * @note usage is determined by $wgUFEnabledPersonalDataFunctions
+	 * @see onParserFirstCallInit()
+	 *
 	 * @param Parser $parser
 	 * @param string $alt
 	 * @return string
@@ -134,6 +137,9 @@ class ExtUserFunctions {
 	}
 
 	/**
+	 * @note usage is determined by $wgUFEnabledPersonalDataFunctions
+	 * @see onParserFirstCallInit()
+	 *
 	 * @param Parser $parser
 	 * @param string $alt
 	 * @return string
@@ -150,6 +156,9 @@ class ExtUserFunctions {
 	}
 
 	/**
+	 * @note usage is determined by $wgUFEnabledPersonalDataFunctions
+	 * @see onParserFirstCallInit()
+	 *
 	 * @param Parser $parser
 	 * @param string $alt
 	 * @return string
@@ -166,6 +175,9 @@ class ExtUserFunctions {
 	}
 
 	/**
+	 * @note usage is determined by $wgUFEnabledPersonalDataFunctions
+	 * @see onParserFirstCallInit()
+	 *
 	 * @param Parser $parser
 	 * @param string $alt
 	 * @return string
@@ -191,6 +203,9 @@ class ExtUserFunctions {
 	}
 
 	/**
+	 * @note usage is determined by $wgUFEnabledPersonalDataFunctions
+	 * @see onParserFirstCallInit()
+	 *
 	 * @param Parser $parser
 	 * @return string
 	 */
@@ -205,7 +220,7 @@ class ExtUserFunctions {
 	 * @param Parser $parser
 	 */
 	public static function onParserFirstCallInit( Parser $parser ) {
-		global $wgUFEnablePersonalDataFunctions, $wgUFAllowedNamespaces, $wgUFEnableSpecialContexts;
+		global $wgUFEnabledPersonalDataFunctions, $wgUFAllowedNamespaces, $wgUFEnableSpecialContexts;
 
 		// Whether it's a Special Page or a Maintenance Script
 		$special = false;
@@ -240,12 +255,10 @@ class ExtUserFunctions {
 			$parser->setFunctionHook( 'ifsysop', [ __CLASS__, 'ifsysopObj' ], Parser::SFH_OBJECT_ARGS );
 			$parser->setFunctionHook( 'ifingroup', [ __CLASS__, 'ifingroupObj' ], Parser::SFH_OBJECT_ARGS );
 
-			if ( $wgUFEnablePersonalDataFunctions ) {
-				$parser->setFunctionHook( 'realname', [ __CLASS__, 'realname' ] );
-				$parser->setFunctionHook( 'username', [ __CLASS__, 'username' ] );
-				$parser->setFunctionHook( 'useremail', [ __CLASS__, 'useremail' ] );
-				$parser->setFunctionHook( 'nickname', [ __CLASS__, 'nickname' ] );
-				$parser->setFunctionHook( 'ip', [ __CLASS__, 'ip' ] );
+			foreach ( $wgUFEnabledPersonalDataFunctions as $function ) {
+				if ( method_exists( __CLASS__, $function ) ) {
+					$parser->setFunctionHook( $function, [ __CLASS__, $function ] );
+				}
 			}
 		}
 	}
