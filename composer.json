@@ -24,5 +24,10 @@
 		"fix": [
 			"minus-x fix ."
 		]
+	},
+	"config": {
+		"allow-plugins": {
+			"composer/installers": true
+		}
 	}
 }
