@@ -23,7 +23,7 @@
 		"UserFunctionsMagic": "UserFunctions.i18n.magic.php"
 	},
 	"AutoloadClasses": {
-		"ExtUserFunctions": "UserFunctions_body.php"
+		"ExtUserFunctions": "ExtUserFunctions.php"
 	},
 	"config": {
 		"UFEnabledPersonalDataFunctions": {
