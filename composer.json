@@ -9,7 +9,7 @@
 	"homepage": "https://www.mediawiki.org/wiki/Extension:UserFunctions",
 	"license": "GPL-2.0-or-later",
 	"require": {
-		"composer/installers": "1.*,>=1.0.1"
+		"composer/installers": ">=1.0.1"
 	},
 	"require-dev": {
 		"mediawiki/mediawiki-codesniffer": "48.0.0",
